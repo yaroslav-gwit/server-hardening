@@ -1,0 +1,4 @@
+# Requirements list
+Jinja2
+colorama
+tabulate
