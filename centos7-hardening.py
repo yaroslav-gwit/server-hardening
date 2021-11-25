@@ -86,7 +86,7 @@ else:
 
 ### /tmp noexec ###
 ### Check ###
-command = "sudo findmnt -n /tmp | grep -c -Ev '\\bnodev\\b'"
+command = "sudo findmnt -n /tmp | grep -c -Ev '\\bnodev\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
 tmp_noexec_mount_check = run_command.decode("utf-8")
 
