@@ -33,6 +33,7 @@ task_list = [
 # Checks and fixes
 
 ### CRAMFS CHECK ###
+check_name = "CramFS"
 command = "sudo modprobe -n -v cramfs | grep -E '(cramfs|install)'"
 run_command = subprocess.check_output(command, shell=True)
 cramfs_file_check = run_command.decode("utf-8")
@@ -42,9 +43,9 @@ run_command = subprocess.check_output(command, shell=True)
 cramfs_kmod_check = run_command.decode("utf-8")
 
 if re.match("install /bin/true", cramfs_file_check) and re.match("0", cramfs_kmod_check):
-    task_list.append(["CramFS", Passed, "-"])
+    task_list.append([check_name, Passed, "-"])
 else:
-    task_list.append(["CramFS", Failed, "-"])
+    task_list.append([check_name, Failed, "-"])
 
 ### CRAMFS FIX ###
 #rmmod cramfs
@@ -54,6 +55,7 @@ else:
 
 ### UDF File Systems ###
 ### Check ###
+check_name = "UDF File Systems"
 command = "sudo modprobe -n -v udf | grep -E '(udf|install)'"
 run_command = subprocess.check_output(command, shell=True)
 udf_file_check = run_command.decode("utf-8")
@@ -63,13 +65,14 @@ run_command = subprocess.check_output(command, shell=True)
 udf_kmod_check = run_command.decode("utf-8")
 
 if re.match("install /bin/true", udf_file_check) and re.match("0", udf_kmod_check):
-    task_list.append(["UDF File Systems", Passed, "-"])
+    task_list.append([check_name, Passed, "-"])
 else:
-    task_list.append(["UDF File Systems", Failed, "-"])
+    task_list.append([check_name, Failed, "-"])
 
 
-### /tmp and tmpfs mount ###
+### /tmp is configured as tmpfs ###
 ### Check ###
+check_name = "/tmp is configured as tmpfs"
 command = "sudo findmnt -n /tmp"
 run_command = subprocess.check_output(command, shell=True)
 tmpfs_file_check_1 = run_command.decode("utf-8")
@@ -79,45 +82,66 @@ run_command = subprocess.check_output(command, shell=True)
 tmpfs_file_check_2 = run_command.decode("utf-8")
 
 if re.match("/tmp.*tmpfs.*tmpfs.*rw,nosuid,nodev,noexec,relatime,seclabel", tmpfs_file_check_1) and re.match("tmpfs /tmp tmpfs defaults,rw,nosuid,nodev,noexec,relatime 0 0", tmpfs_file_check_2):
-    task_list.append(["/tmp and tmpfs mount", Passed, "-"])
+    task_list.append([check_name, Passed, "-"])
 else:
-    task_list.append(["/tmp and tmpfs mount", Failed, "-"])
+    task_list.append([check_name, Failed, "-"])
 
 
 ### /tmp noexec ###
 ### Check ###
+check_name = "/tmp noexec"
 command = "sudo findmnt -n /tmp | grep -c -Ev '\\bnoexec\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
 tmp_noexec_mount_check = run_command.decode("utf-8")
 
 if re.match("0", tmp_noexec_mount_check):
-    task_list.append(["/tmp noexec", Passed, "-"])
+    task_list.append([check_name, Passed, "-"])
 else:
-    task_list.append(["/tmp noexec", Failed, "-"])
+    task_list.append([check_name, Failed, "-"])
 
 
 ### /tmp nodev ###
 ### Check ###
+check_name = "/tmp nodev"
 command = "sudo findmnt -n /tmp | grep -c -Ev '\\bnodev\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
 tmp_nodev_mount_check = run_command.decode("utf-8")
 
 if re.match("0", tmp_nodev_mount_check):
-    task_list.append(["/tmp nodev", Passed, "-"])
+    task_list.append([check_name, Passed, "-"])
 else:
-    task_list.append(["/tmp nodev", Failed, "-"])
+    task_list.append([check_name, Failed, "-"])
 
 
 ### /tmp nosuid ###
 ### Check ###
+check_name = "/tmp nosuid"
 command = "sudo findmnt -n /tmp | grep -c -Ev '\\bnosuid\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
 tmp_nosuid_mount_check = run_command.decode("utf-8")
 
 if re.match("0", tmp_nosuid_mount_check):
-    task_list.append(["/tmp nosuid", Passed, "-"])
+    task_list.append([check_name, Passed, "-"])
 else:
-    task_list.append(["/tmp nosuid", Failed, "-"])
+    task_list.append([check_name, Failed, "-"])
+
+
+### /dev/shm is configured ###
+### Check ###
+check_name = "/dev/shm is configured"
+command = "sudo findmnt -n /dev/shm"
+run_command = subprocess.check_output(command, shell=True)
+devshm_mount_check_1 = run_command.decode("utf-8")
+
+command = "sudo grep -E '\\s/dev/shm\\s' /etc/fstab"
+run_command = subprocess.check_output(command, shell=True)
+devshm_mount_check_2 = run_command.decode("utf-8")
+
+
+if re.match("/dev/shm.*tmpfs.*tmpfs.*rw,nosuid,nodev,noexec,seclabel", devshm_mount_check_1) and re.match("tmpfs.*/dev/shm.*tmpfs.*defaults,noexec,nodev,nosuid,seclabel.*0.*0", devshm_mount_check_2):
+    task_list.append([check_name, Passed, "-"])
+else:
+    task_list.append([check_name, Failed, "-"])
 
 
 # Table printout #
