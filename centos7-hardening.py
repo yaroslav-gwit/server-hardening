@@ -73,7 +73,7 @@ command = "sudo findmnt -n /tmp"
 run_command = subprocess.check_output(command, shell=True)
 tmpfs_file_check_1 = run_command.decode("utf-8")
 
-command = "sudo lsmod | grep -c udf || true"
+command = "grep -E '\s/tmp\s' /etc/fstab | grep -E -v '^\s*#'"
 run_command = subprocess.check_output(command, shell=True)
 tmpfs_file_check_2 = run_command.decode("utf-8")
 
