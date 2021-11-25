@@ -17,24 +17,24 @@ Ideally you would run `--check` first, to see if it starts correctly and if ther
 # Script installation
 From root user, run this command:
 ```
-git pull this-project-com
+git clone https://github.com/yaroslav-gwit/server-hardening.git
 ```
 
 Initialize virtual environment:
 ```
-cd this-project-com
+cd
+cd server-hardening
 python3 -m venv .
 ```
 
 Activate the virtual environment:
 ```
-activate bin/bash
+source bin/activate
 ```
 
 Install PIP dependencies:
 ```
-python3 -m pip install  --upgrade pip
-python3 -m pip install -r requiremenets.txt
+python3 -m pip install -r requirements.txt
 ```
 
 <br>
@@ -44,7 +44,7 @@ python3 -m pip install -r requiremenets.txt
 It's enough to remove the folder that was created by `git pull` command. From `root` user run this sequense of commands:
 ```
 cd
-rm -rf this-project-com
+rm -rf server-hardening
 ```
 
 <br>
@@ -54,7 +54,7 @@ rm -rf this-project-com
 Run this from `root` user to update this script to the latest verion:
 ```
 cd
-cd this-project-com
+cd server-hardening
 git pull
 ```
 

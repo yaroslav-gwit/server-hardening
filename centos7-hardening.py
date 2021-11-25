@@ -31,7 +31,9 @@ task_list = [
 
 
 # Checks and fixes
+
 ### CRAMFS CHECK ###
+
 #modprobe -n -v cramfs | grep -E '(cramfs|install)'
 ## Has to return "install /bin/true"
 command = "sudo modprobe -n -v cramfs | grep -E '(cramfs|install)'"
@@ -48,8 +50,6 @@ if re.match("install /bin/true", cramfs_file_check) and re.match("0", cramfs_kmo
     task_list.append(["CramFS", Passed, "-"])
 else:
     task_list.append(["CramFS", Failed, "-"])
-
-
 
 ### CRAMFS FIX ###
 #rmmod cramfs
