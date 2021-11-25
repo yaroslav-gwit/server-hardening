@@ -73,11 +73,11 @@ command = "sudo findmnt -n /tmp"
 run_command = subprocess.check_output(command, shell=True)
 tmpfs_file_check_1 = run_command.decode("utf-8")
 
-command = "grep -E '\s/tmp\s' /etc/fstab | grep -E -v '^\s*#'"
+command = "sudo grep -E '\s/tmp\s' /etc/fstab | grep -E -v '^\s*#'"
 run_command = subprocess.check_output(command, shell=True)
 tmpfs_file_check_2 = run_command.decode("utf-8")
 
-if re.match("/tmp tmpfs tmpfs rw,nosuid,nodev,noexec", tmpfs_file_check_1) and re.match("tmpfs /tmp tmpfs defaults,noexec,nosuid,nodev 0 0", tmpfs_file_check_2):
+if re.match("/tmp tmpfs tmpfs rw,nosuid,nodev,noexec,relatime,seclabel", tmpfs_file_check_1) and re.match("tmpfs /tmp tmpfs defaults,rw,nosuid,nodev,noexec,relatime 0 0", tmpfs_file_check_2):
     task_list.append(["/tmp and tmpfs mount", Passed, "-"])
 else:
     task_list.append(["/tmp and tmpfs mount", Failed, "-"])
