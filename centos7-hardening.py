@@ -57,4 +57,20 @@ else:
 # Copy over cramfs.conf if it's not in place
 
 
+### UDF File Systems ###
+command = "sudo modprobe -n -v udf | grep -E '(udf|install)'"
+run_command = subprocess.check_output(command, shell=True)
+udf_file_check = run_command.decode("utf-8")
+
+command = "sudo lsmod | grep -c udf || true"
+run_command = subprocess.check_output(command, shell=True)
+udf_kmod_check = run_command.decode("utf-8")
+
+if re.match("install /bin/true", udf_file_check) and re.match("0", udf_kmod_check):
+    task_list.append(["UDF File Systems", Passed, "-"])
+else:
+    task_list.append(["UDF File Systems", Failed, "-"])
+
+
+# Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
