@@ -24,9 +24,9 @@ Fixed = Fore.YELLOW + 'Fixed' + "\033[0m"
 
 # Table content
 task_list = [
-    ["Test passed task", Passed, "-"],
-    ["Test failed task", Failed, "-"],
-    ["Test fixed task", Fixed, "-"],
+    #["Test passed task", Passed, "-"],
+    #["Test failed task", Failed, "-"],
+    #["Test fixed task", Fixed, "-"],
 ]
 
 

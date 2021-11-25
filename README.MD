@@ -15,6 +15,11 @@ Ideally you would run `--check` first, to see if it starts correctly and if ther
 <br>
 
 # Script installation
+Install `python3` and `python3-pip`
+```
+yum install python3 python3-pip
+```
+
 From root user, run this command:
 ```
 git clone https://github.com/yaroslav-gwit/server-hardening.git
@@ -34,6 +39,7 @@ source bin/activate
 
 Install PIP dependencies:
 ```
+python3 -m pip install --upgrade pip
 python3 -m pip install -r requirements.txt
 ```
 
@@ -41,7 +47,7 @@ python3 -m pip install -r requirements.txt
 <br>
 
 # Script removal
-It's enough to remove the folder that was created by `git pull` command. From `root` user run this sequense of commands:
+It's enough to remove the folder that was created by `git clone` command. From `root` user run this sequense of commands:
 ```
 cd
 rm -rf server-hardening
