@@ -86,7 +86,7 @@ else:
 
 ### /tmp noexec ###
 ### Check ###
-command = "sudo findmnt -n /tmp | grep -c -Ev '\\bnodev\\b' || true"
+command = "sudo findmnt -n /tmp | grep -c -Ev '\\bnoexec\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
 tmp_noexec_mount_check = run_command.decode("utf-8")
 
@@ -94,6 +94,18 @@ if re.match("0", tmp_noexec_mount_check):
     task_list.append(["/tmp noexec", Passed, "-"])
 else:
     task_list.append(["/tmp noexec", Failed, "-"])
+
+
+### /tmp nodev ###
+### Check ###
+command = "sudo findmnt -n /tmp | grep -c -Ev '\\bnodev\\b' || true"
+run_command = subprocess.check_output(command, shell=True)
+tmp_nodev_mount_check = run_command.decode("utf-8")
+
+if re.match("0", tmp_nodev_mount_check):
+    task_list.append(["/tmp nodev", Passed, "-"])
+else:
+    task_list.append(["/tmp nodev", Failed, "-"])
 
 
 # Table printout #
