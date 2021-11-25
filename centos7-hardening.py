@@ -145,7 +145,7 @@ else:
 ### /dev/shm is configured ###
 ### Check ###
 check_name = "/dev/shm noexec"
-command = "sudo findmnt -n /dev/shm | grep -Ev '\\bnoexec\\b' || true"
+command = "sudo findmnt -n /dev/shm | grep -c -Ev '\\bnoexec\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
 devshm_mount_noexec_check = run_command.decode("utf-8")
 
