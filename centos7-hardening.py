@@ -135,7 +135,7 @@ else:
 ### /dev/shm is configured ###
 ### Check ###
 check_name = "/dev/shm is configured"
-check_description = "-"
+check_description = "Test description"
 command = "sudo findmnt -n /dev/shm"
 run_command = subprocess.check_output(command, shell=True)
 devshm_mount_check_1 = run_command.decode("utf-8")
