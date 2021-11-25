@@ -137,12 +137,22 @@ command = "sudo grep -E '\\s/dev/shm\\s' /etc/fstab"
 run_command = subprocess.check_output(command, shell=True)
 devshm_mount_check_2 = run_command.decode("utf-8")
 
-
 if re.match("/dev/shm.*tmpfs.*tmpfs.*rw,nosuid,nodev,noexec,seclabel", devshm_mount_check_1) and re.match("tmpfs.*/dev/shm.*tmpfs.*defaults,noexec,nodev,nosuid,seclabel.*0.*0", devshm_mount_check_2):
     task_list.append([check_name, Passed, "-"])
 else:
     task_list.append([check_name, Failed, "-"])
 
+### /dev/shm is configured ###
+### Check ###
+check_name = "/dev/shm noexec"
+command = "sudo findmnt -n /dev/shm | grep -Ev '\\bnoexec\\b'"
+run_command = subprocess.check_output(command, shell=True)
+devshm_mount_noexec_check = run_command.decode("utf-8")
+
+if re.match("0", devshm_mount_noexec_check):
+    task_list.append([check_name, Passed, "-"])
+else:
+    task_list.append([check_name, Failed, "-"])
 
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
