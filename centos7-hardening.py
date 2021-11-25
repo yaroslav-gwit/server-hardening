@@ -67,6 +67,7 @@ if re.match("install /bin/true", udf_file_check) and re.match("0", udf_kmod_chec
 else:
     task_list.append(["UDF File Systems", Failed, "-"])
 
+
 ### /tmp and tmpfs mount ###
 ### Check ###
 command = "sudo findmnt -n /tmp"
@@ -81,6 +82,18 @@ if re.match("/tmp.*tmpfs.*tmpfs.*rw,nosuid,nodev,noexec,relatime,seclabel", tmpf
     task_list.append(["/tmp and tmpfs mount", Passed, "-"])
 else:
     task_list.append(["/tmp and tmpfs mount", Failed, "-"])
+
+
+### /tmp noexec ###
+### Check ###
+command = "sudo findmnt -n /tmp | grep -c -Ev '\bnodev\b'"
+run_command = subprocess.check_output(command, shell=True)
+tmp_noexec_mount_check = run_command.decode("utf-8")
+
+if re.match("0", tmp_noexec_mount_check):
+    task_list.append(["/tmp noexec", Passed, "-"])
+else:
+    task_list.append(["/tmp noexec", Failed, "-"])
 
 
 # Table printout #
