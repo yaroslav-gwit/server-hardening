@@ -96,6 +96,7 @@ else:
     task_list.append(["/tmp noexec", Failed, "-"])
 
 print(tmp_noexec_mount_check)
+print(command)
 
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
