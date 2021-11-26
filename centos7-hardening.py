@@ -177,7 +177,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-### /dev/shm nosui ###
+### /dev/shm nosuid ###
 ### Check ###
 check_name = "/dev/shm nosuid"
 check_description = "-"
@@ -186,6 +186,20 @@ run_command = subprocess.check_output(command, shell=True)
 devshm_mount_nosuid_check = run_command.decode("utf-8")
 
 if re.match("0", devshm_mount_nosuid_check):
+    task_list.append([check_name, Passed, check_description])
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+### /var partition check ###
+### Check ###
+check_name = "/var partition check"
+check_description = "-"
+command = "sudo findmnt /var | grep -c '/var' || true"
+run_command = subprocess.check_output(command, shell=True)
+var_partition_check = run_command.decode("utf-8")
+
+if re.match("1", var_partition_check):
     task_list.append([check_name, Passed, check_description])
 else:
     task_list.append([check_name, Failed, check_description])
