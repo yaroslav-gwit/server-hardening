@@ -179,13 +179,13 @@ else:
 
 ### /dev/shm nosui ###
 ### Check ###
-check_name = "/dev/shm nosui"
+check_name = "/dev/shm nosuid"
 check_description = "-"
-command = "sudo findmnt -n /dev/shm | grep -c -Ev '\\bnosui\\b' || true"
+command = "sudo findmnt -n /dev/shm | grep -c -Ev '\\bnosuid\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
-devshm_mount_nosui_check = run_command.decode("utf-8")
+devshm_mount_nosuid_check = run_command.decode("utf-8")
 
-if re.match("0", devshm_mount_nosui_check):
+if re.match("0", devshm_mount_nosuid_check):
     task_list.append([check_name, Passed, check_description])
 else:
     task_list.append([check_name, Failed, check_description])
