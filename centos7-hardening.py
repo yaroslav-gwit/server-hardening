@@ -38,7 +38,6 @@ task_list = [
 
 # Checks and fixes
 
-### CRAMFS CHECK ###
 check_name = "CramFS"
 check_description = "-"
 command = "sudo modprobe -n -v cramfs | grep -E '(cramfs|install)'"
@@ -55,14 +54,7 @@ if re.match("install /bin/true", cramfs_file_check) and re.match("0", cramfs_kmo
 else:
     task_list.append([check_name, Failed, check_description])
 
-### CRAMFS FIX ###
-#rmmod cramfs
-## Run this is module is loaded
-# Copy over cramfs.conf if it's not in place
 
-
-### UDF File Systems ###
-### Check ###
 check_name = "UDF File Systems"
 check_description = "-"
 command = "sudo modprobe -n -v udf | grep -E '(udf|install)'"
@@ -80,8 +72,6 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-### /tmp is configured as tmpfs ###
-### Check ###
 check_name = "/tmp is configured as tmpfs"
 check_description = "-"
 command = "sudo findmnt -n /tmp"
@@ -99,8 +89,6 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-### /tmp noexec ###
-### Check ###
 check_name = "/tmp noexec"
 check_description = "-"
 command = "sudo findmnt -n /tmp | grep -c -Ev '\\bnoexec\\b' || true"
@@ -114,8 +102,6 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-### /tmp nodev ###
-### Check ###
 check_name = "/tmp nodev"
 check_description = "-"
 command = "sudo findmnt -n /tmp | grep -c -Ev '\\bnodev\\b' || true"
@@ -129,8 +115,6 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-### /tmp nosuid ###
-### Check ###
 check_name = "/tmp nosuid"
 check_description = "-"
 command = "sudo findmnt -n /tmp | grep -c -Ev '\\bnosuid\\b' || true"
@@ -144,8 +128,6 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-### /dev/shm is configured ###
-### Check ###
 check_name = "/dev/shm is configured"
 check_description = "Test description"
 command = "sudo findmnt -n /dev/shm"
@@ -162,8 +144,7 @@ if re.match("/dev/shm.*tmpfs.*tmpfs.*rw,nosuid,nodev,noexec,seclabel", devshm_mo
 else:
     task_list.append([check_name, Failed, check_description])
 
-### /dev/shm noexec ###
-### Check ###
+
 check_name = "/dev/shm noexec"
 check_description = "-"
 command = "sudo findmnt -n /dev/shm | grep -c -Ev '\\bnoexec\\b' || true"
@@ -177,8 +158,6 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-### /dev/shm nodev ###
-### Check ###
 check_name = "/dev/shm nodev"
 check_description = "-"
 command = "sudo findmnt -n /dev/shm | grep -c -Ev '\\bnodev\\b' || true"
@@ -192,8 +171,6 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-### /dev/shm nosuid ###
-### Check ###
 check_name = "/dev/shm nosuid"
 check_description = "-"
 command = "sudo findmnt -n /dev/shm | grep -c -Ev '\\bnosuid\\b' || true"
@@ -207,7 +184,6 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-### /var partition check ###
 ### LVL2 Check ###
 check_name = "/var partition check"
 check_description = "-"
@@ -222,7 +198,6 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-### /var/tmp partition check ###
 ### LVL2 Check ###
 check_name = "/var/tmp partition check"
 check_description = "-"
@@ -237,8 +212,6 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-### /var/tmp noexec ###
-### Check ###
 check_name = "/var/tmp noexec"
 check_description = "-"
 command = "sudo findmnt -n /var/tmp | grep -c -Ev '\\bnoexec\\b' || true"
@@ -246,6 +219,19 @@ run_command = subprocess.check_output(command, shell=True)
 vartmp_noexec_check = run_command.decode("utf-8")
 
 if re.match("0", vartmp_noexec_check):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+check_name = "/var/tmp nodev"
+check_description = "-"
+command = "sudo findmnt -n /var/tmp | grep -c -Ev '\\bnodev\\b' || true"
+run_command = subprocess.check_output(command, shell=True)
+vartmp_nodev_check = run_command.decode("utf-8")
+
+if re.match("0", vartmp_nodev_check):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
