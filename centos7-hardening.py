@@ -306,6 +306,19 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "removable media noexec"
+check_description = "-"
+command = "sudo additional_bash_scripts/check_removable_drives.sh | wc -l"
+run_command = subprocess.check_output(command, shell=True)
+rem_media_noexec_check = run_command.decode("utf-8")
+
+if re.match("0", rem_media_noexec_check):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
