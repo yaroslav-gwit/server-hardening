@@ -310,11 +310,24 @@ else:
 
 check_name = "removable media noexec"
 check_description = "-"
-command = "sudo " + bash_scripts_location + "check_removable_drives.sh | wc -l"
+command = "sudo " + bash_scripts_location + "check_removable_drives_noexec.sh | wc -l"
 run_command = subprocess.check_output(command, shell=True)
 rem_media_noexec_check = run_command.decode("utf-8")
 
 if re.match("0", rem_media_noexec_check):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+check_name = "removable media nodev"
+check_description = "-"
+command = "sudo " + bash_scripts_location + "check_removable_drives_nodev.sh | wc -l"
+run_command = subprocess.check_output(command, shell=True)
+rem_media_nodev_check = run_command.decode("utf-8")
+
+if re.match("0", rem_media_nodev_check):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
