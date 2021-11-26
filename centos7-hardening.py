@@ -13,6 +13,9 @@ from tabulate import tabulate
 bolded_string_Task = "\033[1m" + "Task name" + "\033[0m"
 bolded_string_Status = "\033[1m" + "Status" + "\033[0m"
 bolded_string_Details = "\033[1m" + "Details" + "\033[0m"
+bloded_string_TotalScore = "\033[1m" + "Total Score" + "\033[0m"
+
+total_score = 0
 
 # Table headers
 table_headers = [bolded_string_Task, bolded_string_Status, bolded_string_Details]
@@ -207,3 +210,4 @@ else:
 
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
+print(bloded_string_TotalScore + ": " + total_score)
