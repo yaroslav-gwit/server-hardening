@@ -48,6 +48,7 @@ cramfs_kmod_check = run_command.decode("utf-8")
 
 if re.match("install /bin/true", cramfs_file_check) and re.match("0", cramfs_kmod_check):
     task_list.append([check_name, Passed, check_description])
+    total_score = total_score + 1
 else:
     task_list.append([check_name, Failed, check_description])
 
@@ -71,6 +72,7 @@ udf_kmod_check = run_command.decode("utf-8")
 
 if re.match("install /bin/true", udf_file_check) and re.match("0", udf_kmod_check):
     task_list.append([check_name, Passed, check_description])
+    total_score = total_score + 1
 else:
     task_list.append([check_name, Failed, check_description])
 
@@ -89,6 +91,7 @@ tmpfs_file_check_2 = run_command.decode("utf-8")
 
 if re.match("/tmp.*tmpfs.*tmpfs.*rw,nosuid,nodev,noexec,relatime,seclabel", tmpfs_file_check_1) and re.match("tmpfs /tmp tmpfs defaults,rw,nosuid,nodev,noexec,relatime 0 0", tmpfs_file_check_2):
     task_list.append([check_name, Passed, check_description])
+    total_score = total_score + 1
 else:
     task_list.append([check_name, Failed, check_description])
 
@@ -103,6 +106,7 @@ tmp_noexec_mount_check = run_command.decode("utf-8")
 
 if re.match("0", tmp_noexec_mount_check):
     task_list.append([check_name, Passed, check_description])
+    total_score = total_score + 1
 else:
     task_list.append([check_name, Failed, check_description])
 
@@ -117,6 +121,7 @@ tmp_nodev_mount_check = run_command.decode("utf-8")
 
 if re.match("0", tmp_nodev_mount_check):
     task_list.append([check_name, Passed, check_description])
+    total_score = total_score + 1
 else:
     task_list.append([check_name, Failed, check_description])
 
@@ -131,6 +136,7 @@ tmp_nosuid_mount_check = run_command.decode("utf-8")
 
 if re.match("0", tmp_nosuid_mount_check):
     task_list.append([check_name, Passed, check_description])
+    total_score = total_score + 1
 else:
     task_list.append([check_name, Failed, check_description])
 
@@ -149,6 +155,7 @@ devshm_mount_check_2 = run_command.decode("utf-8")
 
 if re.match("/dev/shm.*tmpfs.*tmpfs.*rw,nosuid,nodev,noexec,seclabel", devshm_mount_check_1) and re.match("tmpfs.*/dev/shm.*tmpfs.*defaults,noexec,nodev,nosuid,seclabel.*0.*0", devshm_mount_check_2):
     task_list.append([check_name, Passed, check_description])
+    total_score = total_score + 1
 else:
     task_list.append([check_name, Failed, check_description])
 
@@ -162,6 +169,7 @@ devshm_mount_noexec_check = run_command.decode("utf-8")
 
 if re.match("0", devshm_mount_noexec_check):
     task_list.append([check_name, Passed, check_description])
+    total_score = total_score + 1
 else:
     task_list.append([check_name, Failed, check_description])
 
@@ -176,6 +184,7 @@ devshm_mount_nodev_check = run_command.decode("utf-8")
 
 if re.match("0", devshm_mount_nodev_check):
     task_list.append([check_name, Passed, check_description])
+    total_score = total_score + 1
 else:
     task_list.append([check_name, Failed, check_description])
 
@@ -190,12 +199,13 @@ devshm_mount_nosuid_check = run_command.decode("utf-8")
 
 if re.match("0", devshm_mount_nosuid_check):
     task_list.append([check_name, Passed, check_description])
+    total_score = total_score + 1
 else:
     task_list.append([check_name, Failed, check_description])
 
 
 ### /var partition check ###
-### Check ###
+### LVL2 Check ###
 check_name = "/var partition check"
 check_description = "-"
 command = "sudo findmnt /var | grep -c '/var' || true"
@@ -204,6 +214,7 @@ var_partition_check = run_command.decode("utf-8")
 
 if re.match("1", var_partition_check):
     task_list.append([check_name, Passed, check_description])
+    total_score = total_score + 1
 else:
     task_list.append([check_name, Failed, check_description])
 
@@ -211,3 +222,4 @@ else:
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
+print()
