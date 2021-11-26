@@ -26,7 +26,7 @@ table_headers = [bolded_string_Task, bolded_string_Status, bolded_string_Details
 Failed = Fore.RED + 'Failed' + "\033[0m"
 Passed = Fore.GREEN + 'Passed' + "\033[0m"
 Fixed = Fore.YELLOW + 'Fixed' + "\033[0m"
-RequiresManualFix = Fore.ORANGE + 'Requires manual fix' + "\033[0m"
+RequiresManualFix = Fore.MAGENTA + 'Requires manual fix' + "\033[0m"
 
 # Table content
 task_list = [
