@@ -35,6 +35,8 @@ task_list = [
     #["Test fixed task", Fixed, "-"],
 ]
 
+# BASH scripts location:
+bash_scripts_location = "/root/server-hardening/additional_bash_scripts/"
 
 # Checks and fixes
 
@@ -308,7 +310,7 @@ else:
 
 check_name = "removable media noexec"
 check_description = "-"
-command = "sudo /root/server-hardening/additional_bash_scripts/check_removable_drives.sh | wc -l"
+command = "sudo " + bash_scripts_location + "check_removable_drives.sh | wc -l"
 run_command = subprocess.check_output(command, shell=True)
 rem_media_noexec_check = run_command.decode("utf-8")
 
