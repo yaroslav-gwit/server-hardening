@@ -336,7 +336,7 @@ else:
 
 check_name = "removable media nosuid"
 check_description = "-"
-command = "sudo " + bash_scripts_location + "check_removable_drives_nosuid.sh | wc -l"
+command = "sudo " + bash_scripts_location + "check_removable_drives_suid.sh | wc -l"
 run_command = subprocess.check_output(command, shell=True)
 rem_media_nosuid_check = run_command.decode("utf-8")
 
