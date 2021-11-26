@@ -225,11 +225,11 @@ else:
 ### LVL2 Check ###
 check_name = "/var/tmp partition check"
 check_description = "-"
-command = "sudo findmnt /var | grep -c '/var' || true"
+command = "sudo findmnt /var/tmp | wc -l"
 run_command = subprocess.check_output(command, shell=True)
 vartmp_partition_check = run_command.decode("utf-8")
 
-if re.match("[12]", vartmp_partition_check):
+if re.match("[^0]", vartmp_partition_check):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl2_plus
 else:
