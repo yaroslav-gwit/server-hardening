@@ -308,7 +308,7 @@ else:
 
 check_name = "removable media noexec"
 check_description = "-"
-command = "sudo additional_bash_scripts/check_removable_drives.sh | wc -l"
+command = "sudo /root/server-hardening/additional_bash_scripts/check_removable_drives.sh | wc -l"
 run_command = subprocess.check_output(command, shell=True)
 rem_media_noexec_check = run_command.decode("utf-8")
 
