@@ -26,6 +26,7 @@ table_headers = [bolded_string_Task, bolded_string_Status, bolded_string_Details
 Failed = Fore.RED + 'Failed' + "\033[0m"
 Passed = Fore.GREEN + 'Passed' + "\033[0m"
 Fixed = Fore.YELLOW + 'Fixed' + "\033[0m"
+RequiresManualFix = Fore.ORANGE + 'Requires manual fix' + "\033[0m"
 
 # Table content
 task_list = [
@@ -239,4 +240,4 @@ else:
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
-print()
+print(RequiresManualFix)
