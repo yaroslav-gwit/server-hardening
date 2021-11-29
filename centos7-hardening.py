@@ -420,6 +420,32 @@ else:
     total_score = total_score + lvl1_plus
 
 
+# check_name = "AIDE is scheduled to run periodically"
+# check_description = "-"
+# command = "sudo rpm -q aide || true"
+# run_command = subprocess.check_output(command, shell=True)
+# aide_is_installed = run_command.decode("utf-8")
+
+# if re.match("package aide is not installed", aide_is_installed):
+#     task_list.append([check_name, Failed, check_description])
+# else:
+#     task_list.append([check_name, Passed, check_description])
+#     total_score = total_score + lvl1_plus
+
+
+check_name = "GRUB2 is password protected"
+check_description = "-"
+command = command = "sudo " + bash_scripts_location + "check_bootloader_password.sh"
+run_command = subprocess.check_output(command, shell=True)
+grub2_is_password_protected = run_command.decode("utf-8")
+
+if re.match("1", grub2_is_password_protected):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
