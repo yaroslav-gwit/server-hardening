@@ -473,7 +473,7 @@ command = "sudo grep /sbin/sulogin /usr/lib/systemd/system/emergency.service"
 run_command = subprocess.check_output(command, shell=True)
 auth_for_single_user_mode_2 = run_command.decode("utf-8")
 
-if re.match("ExecStart=-/bin/sh -c \"/usr/sbin/sulogin; /usr/bin/systemctl --fail --no-block default\"", auth_for_single_user_mode_1):
+if re.match("ExecStart=-/bin/sh -c \"/usr/sbin/sulogin; /usr/bin/systemctl --fail --no-block default\"", auth_for_single_user_mode_1) and re.match("ExecStart=-/bin/sh -c \"/usr/sbin/sulogin; /usr/bin/systemctl --fail --no-block default\"", auth_for_single_user_mode_2):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
