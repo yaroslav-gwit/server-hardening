@@ -308,7 +308,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "removable media noexec"
+check_name = "Removable media noexec"
 check_description = "-"
 command = "sudo " + bash_scripts_location + "check_removable_drives_noexec.sh | wc -l"
 run_command = subprocess.check_output(command, shell=True)
@@ -321,7 +321,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "removable media nodev"
+check_name = "Removable media nodev"
 check_description = "-"
 command = "sudo " + bash_scripts_location + "check_removable_drives_nodev.sh | wc -l"
 run_command = subprocess.check_output(command, shell=True)
@@ -334,7 +334,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "removable media nosuid"
+check_name = "Removable media nosuid"
 check_description = "-"
 command = "sudo " + bash_scripts_location + "check_removable_drives_suid.sh | wc -l"
 run_command = subprocess.check_output(command, shell=True)
@@ -347,7 +347,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "sticky bit check"
+check_name = "Sticky bit check"
 check_description = "-"
 command = "sudo df --local -P 2> /dev/null | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -type d \\( -perm -0002 -a ! -perm -1000 \\) 2>/dev/null | wc -l"
 run_command = subprocess.check_output(command, shell=True)
@@ -360,7 +360,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "disable automounting"
+check_name = "Disable automounting"
 check_description = "-"
 command = "sudo systemctl show \"autofs.service\" | grep -i unitfilestate=enabled | wc -l"
 run_command = subprocess.check_output(command, shell=True)
