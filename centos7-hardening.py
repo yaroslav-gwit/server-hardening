@@ -435,11 +435,28 @@ else:
 
 check_name = "GRUB2 is password protected"
 check_description = "-"
-command = command = "sudo " + bash_scripts_location + "check_bootloader_password.sh"
+command = "sudo " + bash_scripts_location + "check_bootloader_password.sh"
 run_command = subprocess.check_output(command, shell=True)
 grub2_is_password_protected = run_command.decode("utf-8")
 
 if re.match("1", grub2_is_password_protected):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+check_name = "GRUB2 config only accessible by root"
+check_description = "-"
+command = "sudo "
+run_command = subprocess.check_output(command, shell=True)
+grub2_config_root_access_only_user = run_command.decode("utf-8")
+
+command = "sudo "
+run_command = subprocess.check_output(command, shell=True)
+grub2_config_root_access_only_grub = run_command.decode("utf-8")
+
+if re.match("700", grub2_config_root_access_only_user) and re.match("700", grub2_config_root_access_only_grub):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
