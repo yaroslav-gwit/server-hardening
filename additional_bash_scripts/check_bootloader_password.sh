@@ -20,6 +20,6 @@
 # fi
 
 ### MY_OWN ###
-FILE_1 = /boot/efi/EFI/centos/user.cfg
+FILE_1="/boot/efi/EFI/centos/user.cfg"
 
-if [-f /boot/efi/EFI/centos/user.cfg]; then cat $FILE_1 | grep -ci password || true; fi
+if [[ -f $FILE_1 ]]; then cat $FILE_1 | grep -ci password || true; fi
