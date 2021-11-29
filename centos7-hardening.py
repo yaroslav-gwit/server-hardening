@@ -448,11 +448,11 @@ else:
 
 check_name = "GRUB2 config only accessible by root"
 check_description = "-"
-command = "sudo "
+command = "sudo stat -c \"%a\" \"/boot/efi/EFI/centos/user.cfg\""
 run_command = subprocess.check_output(command, shell=True)
 grub2_config_root_access_only_user = run_command.decode("utf-8")
 
-command = "sudo "
+command = "sudo stat -c \"%a\" \"/boot/efi/EFI/centos/grub.cfg\""
 run_command = subprocess.check_output(command, shell=True)
 grub2_config_root_access_only_grub = run_command.decode("utf-8")
 
