@@ -379,7 +379,7 @@ command = "sudo modprobe -n -v usb-storage"
 run_command = subprocess.check_output(command, shell=True)
 disable_usb_storage_file_check = run_command.decode("utf-8")
 
-command = "sudo lsmod | grep -c usb-storage || true"
+command = "sudo lsmod | grep usb-storage | wc -l"
 run_command = subprocess.check_output(command, shell=True)
 disable_usb_storage_kmod_check = run_command.decode("utf-8")
 
