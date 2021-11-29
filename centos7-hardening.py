@@ -373,6 +373,23 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Disable USB Storage"
+check_description = "-"
+command = "sudo modprobe -n -v usb-storage"
+run_command = subprocess.check_output(command, shell=True)
+disable_usb_storage_file_check = run_command.decode("utf-8")
+
+command = "sudo lsmod | grep -c usb-storage || true"
+run_command = subprocess.check_output(command, shell=True)
+disable_usb_storage_kmod_check = run_command.decode("utf-8")
+
+if re.match("install /bin/true", disable_usb_storage_file_check) and re.match("0", disable_usb_storage_kmod_check):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
