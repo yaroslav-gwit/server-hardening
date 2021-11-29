@@ -409,11 +409,11 @@ else:
 
 check_name = "AIDE is installed"
 check_description = "-"
-command = "sudo rpm -q aide"
+command = "sudo rpm -q aide || true"
 run_command = subprocess.check_output(command, shell=True)
 aide_is_installed = run_command.decode("utf-8")
 
-if re.match("package aide is not installed || true", aide_is_installed):
+if re.match("package aide is not installed", aide_is_installed):
     task_list.append([check_name, Failed, check_description])
 else:
     task_list.append([check_name, Passed, check_description])
