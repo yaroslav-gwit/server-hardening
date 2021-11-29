@@ -364,9 +364,9 @@ check_name = "disable automounting"
 check_description = "-"
 command = "sudo systemctl show \"autofs.service\" | grep -i unitfilestate=enabled | wc -l"
 run_command = subprocess.check_output(command, shell=True)
-sticky_bit_check = run_command.decode("utf-8")
+disable_automounting = run_command.decode("utf-8")
 
-if re.match("0", sticky_bit_check):
+if re.match("0", disable_automounting):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
@@ -376,4 +376,4 @@ else:
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
-print(command)
+print()
