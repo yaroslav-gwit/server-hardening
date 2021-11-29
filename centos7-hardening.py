@@ -390,6 +390,22 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "GPG Check is globally activated"
+check_description = "-"
+command = "sudo grep \"^\\s*gpgcheck\" /etc/yum.conf"
+run_command = subprocess.check_output(command, shell=True)
+gpg_globally_activated_file_check = run_command.decode("utf-8")
+
+command = "sudo grep -P '^\\h*gpgcheck=[^1\\n\\r]+\\b(\\h+.*)?$' /etc/yum.conf /etc/yum.repos.d/*.repo | wc -l"
+run_command = subprocess.check_output(command, shell=True)
+gpg_globally_activated = run_command.decode("utf-8")
+
+if re.match("gpgcheck=1", gpg_globally_activated_file_check) and re.match("0", gpg_globally_activated):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
