@@ -13,7 +13,7 @@ from tabulate import tabulate
 bolded_string_Task = "\033[1m" + "Task name" + "\033[0m"
 bolded_string_Status = "\033[1m" + "Status" + "\033[0m"
 bolded_string_Details = "\033[1m" + "Details" + "\033[0m"
-bloded_string_TotalScore = "\033[1m" + "Total Score" + "\033[0m"
+bloded_string_TotalScore = "\033[1m" + "Total System Hardening Points" + "\033[0m"
 
 total_score = 0
 lvl1_plus = 1
