@@ -74,7 +74,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/tmp is configured as tmpfs"
+check_name = "/TMP/ is configured as tmpfs"
 check_description = "-"
 command = "sudo findmnt -n /tmp"
 run_command = subprocess.check_output(command, shell=True)
@@ -91,7 +91,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/tmp noexec"
+check_name = "/TMP/ noexec"
 check_description = "-"
 command = "sudo findmnt -n /tmp | grep -c -Ev '\\bnoexec\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -104,7 +104,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/tmp nodev"
+check_name = "/TMP/ nodev"
 check_description = "-"
 command = "sudo findmnt -n /tmp | grep -c -Ev '\\bnodev\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -117,7 +117,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/tmp nosuid"
+check_name = "/TMP/ nosuid"
 check_description = "-"
 command = "sudo findmnt -n /tmp | grep -c -Ev '\\bnosuid\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -130,7 +130,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/dev/shm is configured"
+check_name = "/DEV/SHM/ is configured"
 check_description = "-"
 command = "sudo findmnt -n /dev/shm"
 run_command = subprocess.check_output(command, shell=True)
@@ -147,7 +147,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/dev/shm noexec"
+check_name = "/DEV/SHM/ noexec"
 check_description = "-"
 command = "sudo findmnt -n /dev/shm | grep -c -Ev '\\bnoexec\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -160,7 +160,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/dev/shm nodev"
+check_name = "/DEV/SHM/ nodev"
 check_description = "-"
 command = "sudo findmnt -n /dev/shm | grep -c -Ev '\\bnodev\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -173,7 +173,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/dev/shm nosuid"
+check_name = "/DEV/SHM/ nosuid"
 check_description = "-"
 command = "sudo findmnt -n /dev/shm | grep -c -Ev '\\bnosuid\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -187,7 +187,7 @@ else:
 
 
 ### LVL2 Check ###
-check_name = "/var partition check"
+check_name = "/VAR/ partition check"
 check_description = "-"
 command = "sudo findmnt /var | grep -c '/var' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -201,7 +201,7 @@ else:
 
 
 ### LVL2 Check ###
-check_name = "/var/tmp partition check"
+check_name = "/VAR/TMP/ partition check"
 check_description = "-"
 command = "sudo findmnt /var/tmp | wc -l"
 run_command = subprocess.check_output(command, shell=True)
@@ -214,7 +214,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/var/tmp noexec"
+check_name = "/VAR/TMP/ noexec"
 check_description = "-"
 command = "sudo findmnt -n /var/tmp | grep -c -Ev '\\bnoexec\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -227,7 +227,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/var/tmp nodev"
+check_name = "/VAR/TMP/ nodev"
 check_description = "-"
 command = "sudo findmnt -n /var/tmp | grep -c -Ev '\\bnodev\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -240,7 +240,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/var/tmp nosuid"
+check_name = "/VAR/TMP/ nosuid"
 check_description = "-"
 command = "sudo findmnt -n /var/tmp | grep -c -Ev '\\bnosuid\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -254,7 +254,7 @@ else:
 
 
 ### LVL2 Check ###
-check_name = "/var/log partition check"
+check_name = "/VAR/LOG/ partition check"
 check_description = "-"
 command = "sudo findmnt /var/log | wc -l"
 run_command = subprocess.check_output(command, shell=True)
@@ -268,7 +268,7 @@ else:
 
 
 ### LVL2 Check ###
-check_name = "/var/log/audit partition check"
+check_name = "/VAR/LOG/AUDIT/ partition check"
 check_description = "-"
 command = "sudo findmnt /var/log/audit | wc -l"
 run_command = subprocess.check_output(command, shell=True)
@@ -282,7 +282,7 @@ else:
 
 
 ### LVL2 Check ###
-check_name = "/home partition check"
+check_name = "/HOME/ partition check"
 check_description = "-"
 command = "sudo findmnt /home | wc -l"
 run_command = subprocess.check_output(command, shell=True)
@@ -295,7 +295,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/home nodev"
+check_name = "/HOME/ nodev"
 check_description = "-"
 command = "sudo findmnt -n /home | grep -c -Ev '\\bnodev\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
