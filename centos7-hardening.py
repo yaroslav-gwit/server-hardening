@@ -498,7 +498,7 @@ run_command = subprocess.check_output(command, shell=True)
 restricted_core_dumps_3 = run_command.decode("utf-8")
 restricted_core_dumps_3_regex = "fs.suid_dumpable = 0"
 
-command = "sudo systemctl is-enabled coredump.service"
+command = "sudo systemctl is-enabled coredump.service || true"
 run_command = subprocess.check_output(command, shell=True)
 restricted_core_dumps_4 = run_command.decode("utf-8")
 restricted_core_dumps_4_regex = "No such file or directory"
