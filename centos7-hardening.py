@@ -658,6 +658,20 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Message of the day is configured"
+check_description = "-"
+command = "sudo grep \"UNAUTHORISED ACCESS TO THIS DEVICE IS PROHIBITED\" /etc/motd | wc -l"
+run_command = subprocess.check_output(command, shell=True)
+motd_is_configued = run_command.decode("utf-8")
+
+if re.match("1", motd_is_configued):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
