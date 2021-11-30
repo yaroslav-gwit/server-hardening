@@ -599,7 +599,7 @@ else:
 
 
 check_name = "SELinux mode is enforcing or permissive"
-check_description = "We are running SELinux in permissive mode, this check will reflect it."
+check_description = "We are running SELinux in permissive mode only."
 
 command = "sudo getenforce"
 run_command = subprocess.check_output(command, shell=True)
