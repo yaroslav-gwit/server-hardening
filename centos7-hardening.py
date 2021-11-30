@@ -484,10 +484,8 @@ check_name = "Resticted core dumps"
 check_description = "-"
 
 command = "sudo grep -E \"^\\s*\\*\\s+hard\\s+core\" /etc/security/limits.conf"
-print(command)
 run_command = subprocess.check_output(command, shell=True)
 restricted_core_dumps_1 = run_command.decode("utf-8")
-print(restricted_core_dumps_1)
 restricted_core_dumps_1_regex = "\* hard core 0"
 
 command = "sudo sysctl fs.suid_dumpable"
