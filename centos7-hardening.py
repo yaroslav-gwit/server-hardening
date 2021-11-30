@@ -723,7 +723,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Permissions on /etc/motd"
+check_name = "Permissions on /etc/issue.net"
 check_description = "-"
 command = "sudo stat -c \"%a\" \"/etc/issue.net\""
 run_command = subprocess.check_output(command, shell=True)
