@@ -420,17 +420,17 @@ else:
     total_score = total_score + lvl1_plus
 
 
-# check_name = "AIDE is scheduled to run periodically"
-# check_description = "-"
-# command = "sudo rpm -q aide || true"
-# run_command = subprocess.check_output(command, shell=True)
-# aide_is_installed = run_command.decode("utf-8")
+check_name = "AIDE is scheduled to run periodically"
+check_description = "-"
+command = "sudo grep -c aide /etc/crontab || true"
+run_command = subprocess.check_output(command, shell=True)
+aide_is_scheduled = run_command.decode("utf-8")
 
-# if re.match("package aide is not installed", aide_is_installed):
-#     task_list.append([check_name, Failed, check_description])
-# else:
-#     task_list.append([check_name, Passed, check_description])
-#     total_score = total_score + lvl1_plus
+if re.match("^[0]", aide_is_scheduled):
+    task_list.append([check_name, Failed, check_description])
+else:
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
 
 
 check_name = "GRUB2 is password protected"
@@ -484,6 +484,6 @@ else:
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
 print()
-print("To do:")
-print("Read more on AIDE, and create a cron job for it")
+# print("To do:")
+# print("Read more on AIDE, and create a cron job for it")
 print()
