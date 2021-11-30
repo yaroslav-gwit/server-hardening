@@ -741,5 +741,5 @@ print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(
 print(bloded_string_TotalScore + ": " + str(total_score))
 print()
 print("To do:")
-print("Configure and check automatic updates. Page 148.")
+print(" - Configure and check automatic updates. Page 148.")
 print()
