@@ -598,6 +598,24 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "SELinux mode is enforcing or permissive"
+check_description = "We are running SELinux in permissive mode, the check will reflect it."
+
+command = "sudo getenforce"
+run_command = subprocess.check_output(command, shell=True)
+selinux_mode_1 = run_command.decode("utf-8")
+
+command = "sudo grep -Ei '^\\s*SELINUX=(enforcing|permissive)' /etc/selinux/config"
+run_command = subprocess.check_output(command, shell=True)
+selinux_mode_2 = run_command.decode("utf-8")
+
+if re.match("Permissive", selinux_mode_1) and re.match("SELINUX=permissive", selinux_mode_2):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
