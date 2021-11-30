@@ -523,6 +523,25 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Address space layout randomization (ASLR) is enabled"
+check_description = "-"
+aslr_is_enabled_regex = "kernel.randomize_va_space = 2"
+
+command = "sudo sysctl kernel.randomize_va_space"
+run_command = subprocess.check_output(command, shell=True)
+aslr_is_enabled_1 = run_command.decode("utf-8")
+
+command = "sudo grep \"kernel\\.randomize_va_space\" /etc/sysctl.conf"
+run_command = subprocess.check_output(command, shell=True)
+aslr_is_enabled_2 = run_command.decode("utf-8")
+
+if re.match(aslr_is_enabled_regex, aslr_is_enabled_1) and re.match(aslr_is_enabled_regex, aslr_is_enabled_2):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
