@@ -480,6 +480,36 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Resticted core dumps"
+check_description = "-"
+
+command = "sudo grep -E \"^\\s*\\*\\s+hard\\s+core\" /etc/security/limits.conf"
+run_command = subprocess.check_output(command, shell=True)
+restricted_core_dumps_1 = run_command.decode("utf-8")
+restricted_core_dumps_1_regex = "* hard core 0"
+
+command = "sudo sysctl fs.suid_dumpable"
+run_command = subprocess.check_output(command, shell=True)
+restricted_core_dumps_2 = run_command.decode("utf-8")
+restricted_core_dumps_2_regex = "fs.suid_dumpable = 0"
+
+command = "sudo grep \"fs\\.suid_dumpable\" /etc/sysctl.conf"
+run_command = subprocess.check_output(command, shell=True)
+restricted_core_dumps_3 = run_command.decode("utf-8")
+restricted_core_dumps_3_regex = "fs.suid_dumpable = 0"
+
+command = "sudo systemctl is-enabled coredump.service"
+run_command = subprocess.check_output(command, shell=True)
+restricted_core_dumps_4 = run_command.decode("utf-8")
+restricted_core_dumps_4_regex = "No such file or directory"
+
+if re.match(restricted_core_dumps_1_regex, restricted_core_dumps_1) and re.match(restricted_core_dumps_2_regex, restricted_core_dumps_2) and re.match(restricted_core_dumps_3_regex, restricted_core_dumps_3) and re.match(restricted_core_dumps_4_regex, restricted_core_dumps_4):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
