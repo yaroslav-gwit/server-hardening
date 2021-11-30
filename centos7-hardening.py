@@ -740,6 +740,6 @@ else:
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
 print()
-# print("To do:")
-# print("Read more on AIDE, and create a cron job for it")
+print("To do:")
+print("Configure and check automatic updates. Page 148.")
 print()
