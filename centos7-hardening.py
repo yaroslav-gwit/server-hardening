@@ -498,12 +498,12 @@ run_command = subprocess.check_output(command, shell=True)
 restricted_core_dumps_3 = run_command.decode("utf-8")
 restricted_core_dumps_3_regex = "fs.suid_dumpable = 0"
 
-# command = "sudo systemctl is-enabled coredump.service || true"
-# run_command = subprocess.check_output(command, shell=True)
-# restricted_core_dumps_4 = run_command.decode("utf-8")
-# restricted_core_dumps_4_regex = "No such file or directory"
+command = "sudo systemctl is-enabled coredump.service 2> /dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+restricted_core_dumps_4 = run_command.decode("utf-8")
+restricted_core_dumps_4_regex = "No such file or directory"
 
-if re.match(restricted_core_dumps_1_regex, restricted_core_dumps_1) and re.match(restricted_core_dumps_2_regex, restricted_core_dumps_2) and re.match(restricted_core_dumps_3_regex, restricted_core_dumps_3):
+if re.match(restricted_core_dumps_1_regex, restricted_core_dumps_1) and re.match(restricted_core_dumps_2_regex, restricted_core_dumps_2) and re.match(restricted_core_dumps_3_regex, restricted_core_dumps_3) and re.match(restricted_core_dumps_4_regex, restricted_core_dumps_4):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
