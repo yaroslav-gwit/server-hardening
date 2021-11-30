@@ -516,7 +516,7 @@ command = "sudo journalctl | grep 'protection: active'"
 run_command = subprocess.check_output(command, shell=True)
 xd_nx_support_enabled = run_command.decode("utf-8")
 
-if re.match("protection: active", xd_nx_support_enabled):
+if re.match(".*protection: active.*", xd_nx_support_enabled):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
