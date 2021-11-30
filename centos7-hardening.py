@@ -697,6 +697,19 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Permissions on /etc/motd"
+check_description = "-"
+command = "sudo stat -c \"%a\" \"/etc/motd\""
+run_command = subprocess.check_output(command, shell=True)
+permissions_on_etc_motd = run_command.decode("utf-8")
+
+if re.match("644", permissions_on_etc_motd):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
