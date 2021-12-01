@@ -870,7 +870,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "IMAP and POP3 server is not installed"
+check_name = "IMAP and POP3 (dovecot) server is not installed"
 check_description = "-"
 
 command = "sudo rpm -q dovecot || true"
@@ -878,6 +878,20 @@ run_command = subprocess.check_output(command, shell=True)
 dovecot_server_is_not_installed = run_command.decode("utf-8")
 
 if re.match("package dovecot is not installed", dovecot_server_is_not_installed):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+check_name = "SAMBA is not installed"
+check_description = "-"
+
+command = "sudo rpm -q samba || true"
+run_command = subprocess.check_output(command, shell=True)
+samba_is_not_installed = run_command.decode("utf-8")
+
+if re.match("package samba is not installed", samba_is_not_installed):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
