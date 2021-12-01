@@ -1036,6 +1036,20 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "rsh client is not installed"
+check_description = "-"
+
+command = "sudo rpm -q rsh || true"
+run_command = subprocess.check_output(command, shell=True)
+rsh_is_not_installed = run_command.decode("utf-8")
+
+if re.match("package rsh is not installed", rsh_is_not_installed):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
