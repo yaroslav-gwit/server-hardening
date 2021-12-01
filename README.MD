@@ -152,8 +152,7 @@ python3 -m pip install -r requirements.txt
 # Script removal
 It's enough to remove the folder that was created by `git clone` command. From `root` user run this sequense of commands:
 ```
-cd
-rm -rf server-hardening
+rm -rf /root/server-hardening
 ```
 
 <br>
