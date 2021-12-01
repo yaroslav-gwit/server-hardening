@@ -986,6 +986,24 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "rpcbind is not installed (or rpcbind service is disabled)"
+check_description = "-"
+
+command = "sudo rpm -q rpcbind || true"
+run_command = subprocess.check_output(command, shell=True)
+nfs_utils_is_not_installed = run_command.decode("utf-8")
+
+command = "sudo systemctl is-enabled rpcbind 2> /dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+nfs_server_is_disabled = run_command.decode("utf-8")
+
+if re.match("package rpcbind is not installed", telnet_server_is_not_installed) or re.match("masked|disabled", nfs_server_is_disabled):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
@@ -994,4 +1012,5 @@ print("To do:")
 print(" - Configure and check automatic updates. Page 148.")
 print(" - Check if xorg server components are needed. Page 163.")
 print(" - Check if cups is needed. Page 167.")
+print(" - Check if rpcbind is needed. Page 196.")
 print()
