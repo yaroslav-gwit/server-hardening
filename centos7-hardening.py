@@ -979,7 +979,7 @@ command = "sudo systemctl is-enabled nfs-server 2> /dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 nfs_server_is_disabled = run_command.decode("utf-8")
 
-if re.match("package nfs-utils is not installed", telnet_server_is_not_installed) or re.match("masked|disabled", nfs_server_is_disabled):
+if re.match("package nfs-utils is not installed", nfs_utils_is_not_installed) or re.match("masked|disabled", nfs_server_is_disabled):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
@@ -991,13 +991,31 @@ check_description = "-"
 
 command = "sudo rpm -q rpcbind || true"
 run_command = subprocess.check_output(command, shell=True)
-nfs_utils_is_not_installed = run_command.decode("utf-8")
+rpcbind_is_not_installed = run_command.decode("utf-8")
 
 command = "sudo systemctl is-enabled rpcbind 2> /dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
-nfs_server_is_disabled = run_command.decode("utf-8")
+rpcbind_is_disabled = run_command.decode("utf-8")
 
-if re.match("package rpcbind is not installed", telnet_server_is_not_installed) or re.match("masked|disabled", nfs_server_is_disabled):
+if re.match("package rpcbind is not installed", rpcbind_is_not_installed) or re.match("masked|disabled", rpcbind_is_disabled):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+check_name = "rsync is not installed (or rsyncd service is disabled)"
+check_description = "-"
+
+command = "sudo rpm -q rsync || true"
+run_command = subprocess.check_output(command, shell=True)
+rsync_is_not_installed = run_command.decode("utf-8")
+
+command = "sudo systemctl is-enabled rsyncd 2> /dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+rsyncd_is_disabled = run_command.decode("utf-8")
+
+if re.match("package rsync is not installed", rsync_is_not_installed) or re.match("masked|disabled", rsyncd_is_disabled):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
