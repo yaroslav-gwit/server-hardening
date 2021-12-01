@@ -968,6 +968,24 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "nfs-utils is not installed (or nfs server disabled)"
+check_description = "-"
+
+command = "sudo rpm -q nfs-utils || true"
+run_command = subprocess.check_output(command, shell=True)
+nfs_utils_is_not_installed = run_command.decode("utf-8")
+
+command = "sudo systemctl is-enabled nfs-server 2> /dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+nfs_server_is_disabled = run_command.decode("utf-8")
+
+if re.match("package nfs-utils is not installed", telnet_server_is_not_installed) or re.match("masked|disabled", nfs_server_is_disabled):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
