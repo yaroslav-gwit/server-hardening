@@ -764,6 +764,23 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "chrony is configured"
+check_description = "-"
+
+command = "sudo grep -G \"^server\\|^pool\" /etc/chrony.conf | wc -l"
+run_command = subprocess.check_output(command, shell=True)
+chrony_is_configured_1 = run_command.decode("utf-8")
+
+command = "systemctl is-enabled chronyd 2> /dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+chrony_is_configured_2 = run_command.decode("utf-8")
+
+if re.match("[^0]", chrony_is_configured_1) and re.match("enabled", chrony_is_configured_2):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
