@@ -785,11 +785,11 @@ else:
 check_name = "Avahi Server is not installed"
 check_description = "-"
 
-command = "sudo rpm -q avahi-autoipd"
+command = "sudo rpm -q avahi-autoipd || true"
 run_command = subprocess.check_output(command, shell=True)
 avahi_server_is_not_installed_1 = run_command.decode("utf-8")
 
-command = "sudo rpm -q avahi"
+command = "sudo rpm -q avahi || true"
 run_command = subprocess.check_output(command, shell=True)
 avahi_server_is_not_installed_2 = run_command.decode("utf-8")
 
