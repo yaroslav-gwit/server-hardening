@@ -739,11 +739,11 @@ else:
 check_name = "xinetd is not installed"
 check_description = "-"
 
-command = "sudo rpm -q xinetd_is_not_installed || true"
+command = "sudo rpm -q xinetd || true"
 run_command = subprocess.check_output(command, shell=True)
 xinetd_is_not_installed = run_command.decode("utf-8")
 
-if re.match("package setroubleshoot is not installed", xinetd_is_not_installed):
+if re.match("package xinetd is not installed", xinetd_is_not_installed):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
