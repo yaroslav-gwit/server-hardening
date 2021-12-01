@@ -817,7 +817,7 @@ else:
 check_name = "LDAP server is not installed"
 check_description = "-"
 
-command = "sudo openldap-servers || true"
+command = "sudo rpm -q openldap-servers || true"
 run_command = subprocess.check_output(command, shell=True)
 ldap_server_is_not_installed = run_command.decode("utf-8")
 
