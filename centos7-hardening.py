@@ -1109,11 +1109,11 @@ else:
 check_name = "Disable wireless"
 check_description = "Run this command to disable wireless: nmcli radio all off"
 
-command = "sudo nmcli radio all | awk '{print $2 " " $4}' | tail -n +2"
+command = "sudo nmcli radio all | awk '{print $2 \" \" $4}' | tail -n +2"
 run_command = subprocess.check_output(command, shell=True)
 disable_wireless = run_command.decode("utf-8")
 
-if re.match(".*disabled disabled", disable_wireless):
+if re.match(".*disabled.*disabled", disable_wireless):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
