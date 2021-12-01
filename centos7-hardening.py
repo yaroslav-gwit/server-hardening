@@ -781,6 +781,25 @@ if re.match("[^0]", chrony_is_configured_1) and re.match("enabled", chrony_is_co
 else:
     task_list.append([check_name, Failed, check_description])
 
+
+check_name = "Avahi Server is not installed"
+check_description = "-"
+
+command = "sudo rpm -q avahi-autoipd"
+run_command = subprocess.check_output(command, shell=True)
+avahi_server_is_not_installed_1 = run_command.decode("utf-8")
+
+command = "sudo rpm -q avahi"
+run_command = subprocess.check_output(command, shell=True)
+avahi_server_is_not_installed_2 = run_command.decode("utf-8")
+
+if re.match("package avahi-autoipd is not installed", avahi_server_is_not_installed_1) and re.match("package avahi is not installed", avahi_server_is_not_installed_2):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
