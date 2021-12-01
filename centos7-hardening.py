@@ -1141,11 +1141,29 @@ command = "sudo sysctl net.ipv4.conf.all.send_redirects"
 run_command = subprocess.check_output(command, shell=True)
 packet_redirect_is_disabled_1 = run_command.decode("utf-8")
 
-command = "sysctl net.ipv4.conf.default.send_redirects"
+command = "sudo sysctl net.ipv4.conf.default.send_redirects"
 run_command = subprocess.check_output(command, shell=True)
 packet_redirect_is_disabled_2 = run_command.decode("utf-8")
 
 if re.match("net.ipv4.conf.all.send_redirects = 0", packet_redirect_is_disabled_1) and re.match("net.ipv4.conf.default.send_redirects = 0", packet_redirect_is_disabled_2):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+check_name = "Source routed packets are not accepted"
+check_description = "-"
+
+command = "sudo sysctl net.ipv4.conf.all.accept_source_route"
+run_command = subprocess.check_output(command, shell=True)
+routed_packets_are_not_accept_1 = run_command.decode("utf-8")
+
+command = "sudo sysctl net.ipv4.conf.default.accept_source_route"
+run_command = subprocess.check_output(command, shell=True)
+routed_packets_are_not_accept_2 = run_command.decode("utf-8")
+
+if re.match("net.ipv4.conf.all.accept_source_route = 0", routed_packets_are_not_accept_1) and re.match("net.ipv4.conf.default.accept_source_route = 0", routed_packets_are_not_accept_2):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
