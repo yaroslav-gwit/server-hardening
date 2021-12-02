@@ -1330,6 +1330,24 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "firewalld service enabled and running"
+check_description = "Page 263: Ensure firewalld service enabled and running"
+
+command = "sudo systemctl is-enabled firewalld 2> /dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+firewalld_service_enabled_and_running_1 = run_command.decode("utf-8")
+
+command = "sudo firewall-cmd --state 2> /dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+firewalld_service_enabled_and_running_2 = run_command.decode("utf-8")
+
+if re.match("enabled", firewalld_service_enabled_and_running_1) and re.match("running", firewalld_service_enabled_and_running_2):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
