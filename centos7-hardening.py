@@ -1252,6 +1252,24 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Reverse Path Filtering is enabled"
+check_description = "-"
+
+command = "sudo sysctl net.ipv4.conf.all.rp_filter"
+run_command = subprocess.check_output(command, shell=True)
+reverse_path_filtering_enabled_1 = run_command.decode("utf-8")
+
+command = "sudo sysctl net.ipv4.conf.default.rp_filter"
+run_command = subprocess.check_output(command, shell=True)
+reverse_path_filtering_enabled_2 = run_command.decode("utf-8")
+
+if re.match("net.ipv4.conf.all.rp_filter = 1", reverse_path_filtering_enabled_1) and re.match("net.ipv4.conf.default.rp_filter = 1", reverse_path_filtering_enabled_2):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
