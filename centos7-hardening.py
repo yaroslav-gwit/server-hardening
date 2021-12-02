@@ -1317,7 +1317,7 @@ else:
 
 
 check_name = "nftables not installed with firewalld"
-check_description = "-"
+check_description = "Page 261: Ensure nftables either not installed or masked with firewalld"
 
 command = "sudo rpm -q nftables 2> /dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
