@@ -1206,6 +1206,24 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Suspicious packets are logged"
+check_description = "-"
+
+command = "sudo sysctl net.ipv4.conf.all.log_martians"
+run_command = subprocess.check_output(command, shell=True)
+suspicious_packets_are_logged_1 = run_command.decode("utf-8")
+
+command = "sudo sysctl net.ipv4.conf.default.log_martians"
+run_command = subprocess.check_output(command, shell=True)
+suspicious_packets_are_logged_2 = run_command.decode("utf-8")
+
+if re.match("net.ipv4.conf.all.log_martians = 1", suspicious_packets_are_logged_1) and re.match("net.ipv4.conf.default.log_martians = 1", suspicious_packets_are_logged_2):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
