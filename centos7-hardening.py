@@ -1365,7 +1365,7 @@ else:
 check_name = "Network interfaces are assigned to appropriate zone"
 check_description = "Page 267: Ensure network interfaces are assigned to appropriate zone"
 
-command = "sudo find /sys/class/net/* -maxdepth 1 | awk -F\"/\" '{print $NF}' | while read -r netint; do [ \"$netint\" != \"lo\" ] && firewall-cmd --get-active-zones | grep -B1 $netint; done"
+command = "sudo find /sys/class/net/* -maxdepth 1 | awk -F\"/\" '{print $NF}' | while read -r netint; do [ \"$netint\" != \"lo\" ] && firewall-cmd --get-active-zones | grep -B1 $netint; done || true"
 run_command = subprocess.check_output(command, shell=True)
 interface_zone_assigned = run_command.decode("utf-8")
 
