@@ -1348,6 +1348,20 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "firewalld default zone is set"
+check_description = "Page 265: Ensure firewalld default zone is set"
+
+command = "sudo firewall-cmd --get-default-zone 2> /dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+firewalld_default_zone_is_set = run_command.decode("utf-8")
+
+if re.match("public", firewalld_default_zone_is_set):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
