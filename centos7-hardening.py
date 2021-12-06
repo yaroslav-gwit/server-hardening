@@ -1348,7 +1348,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "firewalld default zone is set"
+check_name = "firewalld default zone is set to public"
 check_description = "Page 265: Ensure firewalld default zone is set"
 
 command = "sudo firewall-cmd --get-default-zone 2> /dev/null || true"
