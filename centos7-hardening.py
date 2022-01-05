@@ -349,7 +349,7 @@ else:
 
 check_name = "Sticky bit check"
 check_description = "-"
-command = "sudo df --local -P 2> /dev/null | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -type d \\( -perm -0002 -a ! -perm -1000 \\) 2>/dev/null | wc -l"
+command = "sudo df --local -P 2>/dev/null | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -type d \\( -perm -0002 -a ! -perm -1000 \\) 2>/dev/null | wc -l"
 run_command = subprocess.check_output(command, shell=True)
 sticky_bit_check = run_command.decode("utf-8")
 
@@ -498,7 +498,7 @@ run_command = subprocess.check_output(command, shell=True)
 restricted_core_dumps_3 = run_command.decode("utf-8")
 restricted_core_dumps_3_regex = "fs.suid_dumpable = 0"
 
-command = "sudo systemctl is-enabled coredump.service 2> /dev/null | wc -l || true"
+command = "sudo systemctl is-enabled coredump.service 2>/dev/null | wc -l || true"
 run_command = subprocess.check_output(command, shell=True)
 restricted_core_dumps_4 = run_command.decode("utf-8")
 restricted_core_dumps_4_regex = "0"
@@ -771,7 +771,7 @@ command = "sudo grep -G \"^server\\|^pool\" /etc/chrony.conf | wc -l"
 run_command = subprocess.check_output(command, shell=True)
 chrony_is_configured_1 = run_command.decode("utf-8")
 
-command = "systemctl is-enabled chronyd 2> /dev/null || true"
+command = "systemctl is-enabled chronyd 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 chrony_is_configured_2 = run_command.decode("utf-8")
 
@@ -975,7 +975,7 @@ command = "sudo rpm -q nfs-utils || true"
 run_command = subprocess.check_output(command, shell=True)
 nfs_utils_is_not_installed = run_command.decode("utf-8")
 
-command = "sudo systemctl is-enabled nfs-server 2> /dev/null || true"
+command = "sudo systemctl is-enabled nfs-server 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 nfs_server_is_disabled = run_command.decode("utf-8")
 
@@ -993,7 +993,7 @@ command = "sudo rpm -q rpcbind || true"
 run_command = subprocess.check_output(command, shell=True)
 rpcbind_is_not_installed = run_command.decode("utf-8")
 
-command = "sudo systemctl is-enabled rpcbind 2> /dev/null || true"
+command = "sudo systemctl is-enabled rpcbind 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 rpcbind_is_disabled = run_command.decode("utf-8")
 
@@ -1011,7 +1011,7 @@ command = "sudo rpm -q rsync || true"
 run_command = subprocess.check_output(command, shell=True)
 rsync_is_not_installed = run_command.decode("utf-8")
 
-command = "sudo systemctl is-enabled rsyncd 2> /dev/null || true"
+command = "sudo systemctl is-enabled rsyncd 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 rsyncd_is_disabled = run_command.decode("utf-8")
 
@@ -1287,11 +1287,11 @@ else:
 check_name = "Firewalld is installed"
 check_description = "-"
 
-command = "sudo rpm -q firewalld 2> /dev/null || true"
+command = "sudo rpm -q firewalld 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 firewalld_installed_1 = run_command.decode("utf-8")
 
-command = "sudo rpm -q iptables 2> /dev/null || true"
+command = "sudo rpm -q iptables 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 firewalld_installed_2 = run_command.decode("utf-8")
 
@@ -1305,7 +1305,7 @@ else:
 check_name = "iptables-services not installed with firewalld"
 check_description = "-"
 
-command = "sudo rpm -q iptables-services 2> /dev/null || true"
+command = "sudo rpm -q iptables-services 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 iptables_services_not_installed = run_command.decode("utf-8")
 
@@ -1319,7 +1319,7 @@ else:
 check_name = "nftables not installed with firewalld"
 check_description = "Page 261: Ensure nftables either not installed or masked with firewalld"
 
-command = "sudo rpm -q nftables 2> /dev/null || true"
+command = "sudo rpm -q nftables 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 nftables_not_installed = run_command.decode("utf-8")
 
@@ -1333,11 +1333,11 @@ else:
 check_name = "firewalld service enabled and running"
 check_description = "Page 263: Ensure firewalld service enabled and running"
 
-command = "sudo systemctl is-enabled firewalld 2> /dev/null || true"
+command = "sudo systemctl is-enabled firewalld 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 firewalld_service_enabled_and_running_1 = run_command.decode("utf-8")
 
-command = "sudo firewall-cmd --state 2> /dev/null || true"
+command = "sudo firewall-cmd --state 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 firewalld_service_enabled_and_running_2 = run_command.decode("utf-8")
 
@@ -1351,7 +1351,7 @@ else:
 check_name = "firewalld default zone is set to public"
 check_description = "Page 265: Ensure firewalld default zone is set"
 
-command = "sudo firewall-cmd --get-default-zone 2> /dev/null || true"
+command = "sudo firewall-cmd --get-default-zone 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 firewalld_default_zone_is_set = run_command.decode("utf-8")
 
@@ -1411,7 +1411,7 @@ else:
 check_name = "auditd service is enabled and running"
 check_description = "Page 340: Ensure auditd service is enabled and running"
 
-command = "sudo systemctl is-enabled auditd 2> /dev/null || true"
+command = "sudo systemctl is-enabled auditd 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 auditd_is_enabled = run_command.decode("utf-8")
 
@@ -1429,7 +1429,7 @@ else:
 check_name = "auditing for processes that start prior to auditd is enabled"
 check_description = "Page 341: Ensure auditing for processes that start prior to auditd is enabled"
 
-command = "sudo grep audit=1 /etc/default/grub 2> /dev/null || true"
+command = "sudo grep audit=1 /etc/default/grub 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 auditd_is_included_in_grub = run_command.decode("utf-8")
 
@@ -1452,6 +1452,24 @@ if re.match("package rsyslog is not installed", rsyslog_is_installed):
 else:
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
+
+
+check_name = "rsyslog service is enabled and running"
+check_description = "Page 397: Ensure rsyslog Service is enabled and running"
+
+command = "sudo systemctl is-enabled rsyslog 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+rsyslog_is_enabled = run_command.decode("utf-8")
+
+command = "systemctl status rsyslog | grep 'Active: active (running) '"
+run_command = subprocess.check_output(command, shell=True)
+rsyslog_is_running = run_command.decode("utf-8")
+
+if re.match("enabled", rsyslog_is_enabled) and re.match(".*(running).*", rsyslog_is_running):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
 
 
 # Table printout #
