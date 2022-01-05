@@ -1391,7 +1391,7 @@ else:
 
 
 check_name = "Auditd is installed"
-check_description = "Page 338 - Ensure auditd is installed"
+check_description = "Page 338: Ensure auditd is installed"
 
 command = "sudo rpm -q audit || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -1406,6 +1406,24 @@ if re.match("package audit is not installed", auditd_is_installed) and re.match(
 else:
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
+
+
+check_name = "auditd service is enabled and running"
+check_description = "Page 340: Ensure auditd service is enabled and running"
+
+command = "sudo systemctl is-enabled auditd 2> /dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+auditd_is_enabled = run_command.decode("utf-8")
+
+command = "systemctl status auditd | grep 'Active: active (running) '"
+run_command = subprocess.check_output(command, shell=True)
+auditd_is_running = run_command.decode("utf-8")
+
+if re.match("enabled", auditd_is_enabled) and re.match("(running)", auditd_is_running):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
 
 
 # Table printout #
