@@ -1390,6 +1390,24 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Auditd is installed"
+check_description = "Page 338 - Ensure auditd is installed"
+
+command = "sudo rpm -q audit || true"
+run_command = subprocess.check_output(command, shell=True)
+auditd_is_installed = run_command.decode("utf-8")
+
+command = "sudo rpm -q audit-libs || true"
+run_command = subprocess.check_output(command, shell=True)
+audit_libs_is_installed = run_command.decode("utf-8")
+
+if re.match("package audit is not installed", auditd_is_installed) and re.match("package audit-libs is not installed", audit_libs_is_installed):
+    task_list.append([check_name, Failed, check_description])
+else:
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
