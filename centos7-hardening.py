@@ -1439,6 +1439,21 @@ if re.match("GRUB_CMDLINE_LINUX.*audit=1.*", auditd_is_included_in_grub):
 else:
     task_list.append([check_name, Failed, check_description])
 
+
+check_name = "rsyslog is installed"
+check_description = "Page 395: Ensure rsyslog is installed"
+
+command = "sudo rpm -q rsyslog || true"
+run_command = subprocess.check_output(command, shell=True)
+rsyslog_is_installed = run_command.decode("utf-8")
+
+if re.match("package rsyslog is not installed", rsyslog_is_installed):
+    task_list.append([check_name, Failed, check_description])
+else:
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
