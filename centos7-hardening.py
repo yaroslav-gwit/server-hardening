@@ -1426,6 +1426,19 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "auditing for processes that start prior to auditd is enabled"
+check_description = "Page 341: Ensure auditing for processes that start prior to auditd is enabled"
+
+command = "sudo grep audit=1 /etc/default/grub 2> /dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+auditd_is_included_in_grub = run_command.decode("utf-8")
+
+if re.match("GRUB_CMDLINE_LINUX.*audit=1.*", auditd_is_included_in_grub):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl2_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
