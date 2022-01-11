@@ -1493,7 +1493,7 @@ command = "sudo grep -G \"^authpriv.*\" /etc/rsyslog.conf 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 rsyslog_remote_server = run_command.decode("utf-8")
 
-if re.match("^authpriv.* @192.168.214.62", rsyslog_remote_server) or re.match("^authpriv.* @192.168.213.40", rsyslog_remote_server):
+if re.match("authpriv.* @192.168.214.62", rsyslog_remote_server) or re.match("authpriv.* @192.168.213.40", rsyslog_remote_server):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
