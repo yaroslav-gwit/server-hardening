@@ -1511,7 +1511,7 @@ command = "sudo grep '$InputTCPServerRun' /etc/rsyslog.conf 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 rsyslog_is_not_accepting_logs_2 = run_command.decode("utf-8")
 
-if re.match("^#$ModLoad imtcp", rsyslog_is_not_accepting_logs_1) or re.match("^#$InputTCPServerRun 514", rsyslog_is_not_accepting_logs_2):
+if re.match("#$ModLoad imtcp", rsyslog_is_not_accepting_logs_1) and re.match("#$InputTCPServerRun 514", rsyslog_is_not_accepting_logs_2):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
