@@ -1487,13 +1487,31 @@ else:
 
 
 check_name = "rsyslog is configured to send logs to a remote log host"
-check_description = "Page 403: 4.2.1.5 Ensure rsyslog is configured to send logs to a remote log host"
+check_description = "Page 403: Ensure rsyslog is configured to send logs to a remote log host"
 
 command = "sudo grep -G \"^authpriv.*\" /etc/rsyslog.conf 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 rsyslog_remote_server = run_command.decode("utf-8")
 
 if re.match("authpriv.* @192.168.214.62", rsyslog_remote_server) or re.match("authpriv.* @192.168.213.40", rsyslog_remote_server):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+check_name = "remote rsyslog messages are only accepted on designated log hosts"
+check_description = "Page 406: Ensure remote rsyslog messages are only accepted on designated log hosts."
+
+command = "sudo grep '$ModLoad imtcp' /etc/rsyslog.conf 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+rsyslog_is_not_accepting_logs_1 = run_command.decode("utf-8")
+
+command = "sudo grep '$InputTCPServerRun' /etc/rsyslog.conf 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+rsyslog_is_not_accepting_logs_2 = run_command.decode("utf-8")
+
+if re.match("^#$ModLoad imtcp", rsyslog_is_not_accepting_logs_1) or re.match("^#$InputTCPServerRun 514", rsyslog_is_not_accepting_logs_2):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
