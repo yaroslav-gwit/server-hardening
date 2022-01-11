@@ -1489,7 +1489,7 @@ else:
 check_name = "rsyslog is configured to send logs to a remote log host"
 check_description = "Page 403: 4.2.1.5 Ensure rsyslog is configured to send logs to a remote log host"
 
-command = "sudo grep \"authpriv.*\" /etc/rsyslog.conf 2>/dev/null || true"
+command = "sudo grep -G \"^authpriv.*\" /etc/rsyslog.conf 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 rsyslog_remote_server = run_command.decode("utf-8")
 
