@@ -1739,6 +1739,20 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 440: Ensure sudo commands use pty"
+check_description = "-"
+
+command = "sudo grep use_pty /etc/sudoers 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+sudo_uses_pty = run_command.decode("utf-8")
+
+if re.match("Defaults use_pty", sudo_is_installed):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
