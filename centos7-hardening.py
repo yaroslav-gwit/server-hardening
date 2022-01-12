@@ -1758,7 +1758,7 @@ check_description = "-"
 
 sudo_log_file_exists = exists("/var/log/sudo.log")
 
-command = "sudo grep use_pty /etc/sudoers 2>/dev/null || true"
+command = "sudo grep logfile /etc/sudoers 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 sudo_log_file_config = run_command.decode("utf-8")
 
