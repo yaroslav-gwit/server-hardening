@@ -1739,7 +1739,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Page 440: Ensure sudo commands use pty"
+check_name = "Page 442: Ensure sudo commands use pty"
 check_description = "-"
 
 command = "sudo grep use_pty /etc/sudoers 2>/dev/null || true"
@@ -1747,6 +1747,22 @@ run_command = subprocess.check_output(command, shell=True)
 sudo_uses_pty = run_command.decode("utf-8")
 
 if re.match("Defaults use_pty", sudo_uses_pty):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+check_name = "Page 444: Ensure sudo log file exists"
+check_description = "-"
+
+sudo_log_file_exists = exists("/var/log/sudo.log")
+
+command = "sudo grep use_pty /etc/sudoers 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+sudo_log_file_config = run_command.decode("utf-8")
+
+if sudo_log_file_exists and re.match("Defaults logfile=\"/var/log/sudo.log\"", sudo_log_file_config):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
