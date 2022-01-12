@@ -1574,6 +1574,21 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 417: Ensure logrotate is configured"
+check_description = "-"
+
+command = "sudo grep -G \"^weekly\" /etc/logrotate.conf 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+logrotate_is_configured = run_command.decode("utf-8")
+
+if re.match("weekly", logrotate_is_configured):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
