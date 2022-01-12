@@ -1500,8 +1500,8 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "remote rsyslog messages are only accepted on designated log hosts"
-check_description = "Page 406: Ensure remote rsyslog messages are only accepted on designated log hosts."
+check_name = "Page 406: Ensure remote rsyslog messages are only accepted on designated log hosts"
+check_description = "-"
 
 command = "sudo grep '$ModLoad imtcp' /etc/rsyslog.conf 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -1540,6 +1540,20 @@ run_command = subprocess.check_output(command, shell=True)
 journald_compress = run_command.decode("utf-8")
 
 if re.match("^Compress=yes", journald_compress):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+check_name = "Page 413: Ensure journald is configured to write logfiles to persistent disk"
+check_description = "-"
+
+command = "sudo grep Storage /etc/systemd/journald.conf 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+journald_persistent_storage = run_command.decode("utf-8")
+
+if re.match("^Storage=persistent", journald_persistent_storage):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
