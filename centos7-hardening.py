@@ -3,6 +3,7 @@
 import subprocess
 import argparse
 import re
+from os.path import exists
 
 # 3rd party imports
 import jinja2
@@ -1684,6 +1685,23 @@ run_command = subprocess.check_output(command, shell=True)
 cron_d_folder_permissions = run_command.decode("utf-8")
 
 if re.match(".*0700.*root.*root", cron_d_folder_permissions):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+check_name = "Page 435: Ensure cron is restricted to authorized users"
+check_description = "-"
+
+cron_deny_exist = exists("/etc/cron.deny")
+cron_allow_exist = exists("/etc/cron.allow")
+
+command = "sudo stat /etc/cron.allow | grep Access | head -1 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+cron_allow_permissions = run_command.decode("utf-8")
+
+if not cron_deny_exist and cron_allow_exist and re.match(".*0600.*root.*root", cron_allow_permissions):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
