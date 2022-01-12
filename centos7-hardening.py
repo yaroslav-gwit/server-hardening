@@ -1599,7 +1599,7 @@ command = "sudo systemctl status crond | grep Active 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 crond_is_running = run_command.decode("utf-8")
 
-if re.match("enabled", crond_is_enabled) and re.match("Active: active (running)", crond_is_running):
+if re.match("enabled", crond_is_enabled) and re.match(".*Active: active (running)", crond_is_running):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
