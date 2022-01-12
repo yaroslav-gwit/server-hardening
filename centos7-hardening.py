@@ -1316,8 +1316,8 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "nftables not installed with firewalld"
-check_description = "Page 261: Ensure nftables either not installed or masked with firewalld"
+check_name = "Page 261: Ensure nftables either not installed or masked with firewalld"
+check_description = "-"
 
 command = "sudo rpm -q nftables 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -1330,8 +1330,8 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "firewalld service enabled and running"
-check_description = "Page 263: Ensure firewalld service enabled and running"
+check_name = "Page 263: Ensure firewalld service enabled and running"
+check_description = "-"
 
 command = "sudo systemctl is-enabled firewalld 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -1348,8 +1348,8 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "firewalld default zone is set to public"
-check_description = "Page 265: Ensure firewalld default zone is set"
+check_name = "Page 265: Ensure firewalld default zone is set"
+check_description = "-"
 
 command = "sudo firewall-cmd --get-default-zone 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -1362,8 +1362,8 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Network interfaces are assigned to appropriate zone"
-check_description = "Page 267: Ensure network interfaces are assigned to appropriate zone"
+check_name = "Page 267: Ensure network interfaces are assigned to appropriate zone"
+check_description = "-"
 
 command = "sudo find /sys/class/net/* -maxdepth 1 | awk -F\"/\" '{print $NF}' | while read -r netint; do [ \"$netint\" != \"lo\" ] && firewall-cmd --get-active-zones | grep -B1 $netint; done || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -1376,8 +1376,8 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "firewalld drops unnecessary services and ports"
-check_description = "Page 269: Ensure firewalld drops unnecessary services and ports"
+check_name = "Page 269: Ensure firewalld drops unnecessary services and ports"
+check_description = "-"
 
 command = "sudo firewall-cmd --list-all --zone=public | grep services"
 run_command = subprocess.check_output(command, shell=True)
@@ -1390,8 +1390,8 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Auditd is installed"
-check_description = "Page 338: Ensure auditd is installed"
+check_name = "Page 338: Ensure auditd is installed"
+check_description = "-"
 
 command = "sudo rpm -q audit || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -1408,8 +1408,8 @@ else:
     total_score = total_score + lvl2_plus
 
 
-check_name = "auditd service is enabled and running"
-check_description = "Page 340: Ensure auditd service is enabled and running"
+check_name = "Page 340: Ensure auditd service is enabled and running"
+check_description = "-"
 
 command = "sudo systemctl is-enabled auditd 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -1426,8 +1426,8 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "auditing for processes that start prior to auditd is enabled"
-check_description = "Page 341: Ensure auditing for processes that start prior to auditd is enabled"
+check_name = "Page 341: Ensure auditing for processes that start prior to auditd is enabled"
+check_description = "-"
 
 command = "sudo grep audit=1 /etc/default/grub 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -1440,8 +1440,8 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "rsyslog is installed"
-check_description = "Page 395: Ensure rsyslog is installed"
+check_name = "Page 395: Ensure rsyslog is installed"
+check_description = "-"
 
 command = "sudo rpm -q rsyslog || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -1454,8 +1454,8 @@ else:
     total_score = total_score + lvl1_plus
 
 
-check_name = "rsyslog service is enabled and running"
-check_description = "Page 397: Ensure rsyslog Service is enabled and running"
+check_name = "Page 397: Ensure rsyslog Service is enabled and running"
+check_description = "-"
 
 command = "sudo systemctl is-enabled rsyslog 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -1472,8 +1472,8 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "rsyslog default file permissions configured"
-check_description = "Page 399: Ensure rsyslog default file permissions configured"
+check_name = "Page 399: Ensure rsyslog default file permissions configured"
+check_description = "-"
 
 command = "sudo grep ^\$FileCreateMode /etc/rsyslog.conf 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -1486,8 +1486,8 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "rsyslog is configured to send logs to a remote log host"
-check_description = "Page 403: Ensure rsyslog is configured to send logs to a remote log host"
+check_name = "Page 403: Ensure rsyslog is configured to send logs to a remote log host"
+check_description = "-"
 
 command = "sudo grep -G \"^authpriv.*\" /etc/rsyslog.conf 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
