@@ -1518,14 +1518,28 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "journald is configured to send logs to rsyslog"
-check_description = "Page 409: Ensure journald is configured to send logs to rsyslog"
+check_name = "Page 409: Ensure journald is configured to send logs to rsyslog"
+check_description = "-"
 
 command = "sudo grep -G \"^ForwardToSyslog\" /etc/systemd/journald.conf 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 journald_logs_to_rsyslog = run_command.decode("utf-8")
 
 if re.match("^ForwardToSyslog=yes", journald_logs_to_rsyslog):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+check_name = "Page 411: Ensure journald is configured to compress large log files"
+check_description = "-"
+
+command = "sudo grep Compress /etc/systemd/journald.conf 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+journald_compress = run_command.decode("utf-8")
+
+if re.match("^Compress=yes", journald_compress):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
