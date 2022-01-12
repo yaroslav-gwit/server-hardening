@@ -1567,7 +1567,7 @@ command = "sudo find /var/log -type f -perm /g+wx,o+rwx -exec ls -l {} \; | wc -
 run_command = subprocess.check_output(command, shell=True)
 log_files_permissions = run_command.decode("utf-8")
 
-if not re.match("0", log_files_permissions):
+if re.match("0", log_files_permissions):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
