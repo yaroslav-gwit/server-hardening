@@ -1708,6 +1708,23 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 437: Ensure at is restricted to authorized users"
+check_description = "-"
+
+at_deny_exist = exists("/etc/at.deny")
+at_allow_exist = exists("/etc/at.allow")
+
+command = "sudo stat /etc/at.allow | grep Access | head -1 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+at_allow_permissions = run_command.decode("utf-8")
+
+if not at_deny_exist and at_allow_exist and re.match(".*0600.*root.*root", at_allow_permissions):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
