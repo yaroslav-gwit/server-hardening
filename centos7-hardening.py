@@ -1560,6 +1560,20 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 415: Ensure permissions on all logfiles are configured"
+check_description = "-"
+
+command = "sudo find /var/log -type f -perm /g+wx,o+rwx -exec ls -l {} \; | wc -l 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+log_files_permissions = run_command.decode("utf-8")
+
+if not re.match("0", log_files_permissions):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
