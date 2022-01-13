@@ -1981,6 +1981,22 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 481: Ensure only strong Key Exchange algorithms are used"
+check_description = "-"
+
+command = "sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(hostname) /etc/hosts | awk '{print $1}')\" | grep -Ei '^\\s*kexalgorithms\\s+([^#]+,)?(diffie-hellman-group1-sha1|diffie-hellman-group14-sha1|diffie-hellman-group-exchange-sha1)\\b' | wc -l"
+run_command = subprocess.check_output(command, shell=True)
+ssh_only_strong_key_exchanges = run_command.decode("utf-8")
+
+ssh_only_strong_key_exchanges_re = "0"
+
+if re.match(ssh_only_strong_key_exchanges_re, ssh_only_strong_key_exchanges):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
