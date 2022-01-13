@@ -1790,11 +1790,7 @@ command = "sudo find /etc/ssh -xdev -type f -name 'ssh_host_*_key' -exec stat {}
 run_command = subprocess.check_output(command, shell=True)
 ssh_host_key_files_permissions = run_command.decode("utf-8")
 
-regexp_ssh_host_key_files_permissions = '''
-.*0640.*root.*ssh_keys.*
-.*0640.*root.*ssh_keys.*
-.*0640.*root.*ssh_keys.*
-'''
+regexp_ssh_host_key_files_permissions = ".*0640.*root.*ssh_keys.*.*0640.*root.*ssh_keys.*.*0640.*root.*ssh_keys.*"
 
 if re.match(regexp_ssh_host_key_files_permissions, ssh_host_key_files_permissions):
     task_list.append([check_name, Passed, check_description])
