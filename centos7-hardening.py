@@ -1997,6 +1997,24 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 484: Ensure SSH Idle Timeout Interval is configured"
+check_description = "-"
+
+command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(hostname) /etc/hosts | awk '{print $1}')\" | grep clientaliveinterval"
+run_command = subprocess.check_output(command, shell=True)
+ssh_idle_timeout_interval_1 = run_command.decode("utf-8").split()[1]
+
+command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(hostname) /etc/hosts | awk '{print $1}')\" | grep clientalivecountmax"
+run_command = subprocess.check_output(command, shell=True)
+ssh_idle_timeout_interval_2 = run_command.decode("utf-8").split()[1]
+
+if int(ssh_idle_timeout_interval_1) < 900 and int(ssh_idle_timeout_interval_2) > 0:
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
