@@ -2061,6 +2061,22 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 496: Ensure SSH MaxStartups is configured"
+check_description = "-"
+
+command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(hostname) /etc/hosts | awk '{print $1}')\" | grep -i maxstartups"
+run_command = subprocess.check_output(command, shell=True)
+ssh_max_startups = run_command.decode("utf-8")
+
+ssh_max_startups_re = "maxstartups 10:30:60"
+
+if re.match(ssh_max_startups_re, ssh_max_startups):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
