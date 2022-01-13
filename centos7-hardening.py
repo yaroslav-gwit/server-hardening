@@ -1936,7 +1936,7 @@ command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(
 run_command = subprocess.check_output(command, shell=True)
 ssh_permit_user_environment_1 = run_command.decode("utf-8")
 
-command = "sudo grep -Gi \"^permitemptypasswords\" /etc/ssh/sshd_config 2>/dev/null || true"
+command = "sudo grep -Gi \"^permituserenvironment\" /etc/ssh/sshd_config 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 ssh_permit_user_environment_2 = run_command.decode("utf-8")
 
