@@ -1849,6 +1849,24 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 464: Ensure SSH IgnoreRhosts is enabled"
+check_description = "-"
+
+command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(hostname) /etc/hosts | awk '{print $1}')\" | grep ignorerhosts"
+run_command = subprocess.check_output(command, shell=True)
+C = run_command.decode("utf-8").split()[1]
+
+command = "sudo grep -Gi \"^ignorerhosts\" /etc/ssh/sshd_config 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+ssh_ignore_rhosts_2 = run_command.decode("utf-8").split()[1]
+
+if re.match("[Ii]gno[Rr]erhosts yes", ssh_ignore_rhosts_1) and re.match("[Ii]gno[Rr]erhosts yes", ssh_ignore_rhosts_2):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
