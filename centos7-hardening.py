@@ -2008,7 +2008,21 @@ command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(
 run_command = subprocess.check_output(command, shell=True)
 ssh_idle_timeout_interval_2 = run_command.decode("utf-8").split()[1]
 
-if int(ssh_idle_timeout_interval_1) > 1 and int(ssh_idle_timeout_interval_1) <= 900 and int(ssh_idle_timeout_interval_2) == 0:
+if int(ssh_idle_timeout_interval_1) >= 1 and int(ssh_idle_timeout_interval_1) <= 900 and int(ssh_idle_timeout_interval_2) == 0:
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+check_name = "Page 484: Ensure SSH LoginGraceTime is set to one minute or less"
+check_description = "-"
+
+command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(hostname) /etc/hosts | awk '{print $1}')\" | grep logingracetime"
+run_command = subprocess.check_output(command, shell=True)
+ssh_login_grace_time = run_command.decode("utf-8").split()[1]
+
+if int(ssh_login_grace_time) >= 1 and int(ssh_login_grace_time) <= 60:
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
