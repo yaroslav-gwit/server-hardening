@@ -1949,6 +1949,22 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 474: Ensure only strong Ciphers are used"
+check_description = "-"
+
+command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(hostname) /etc/hosts | awk '{print $1}')\" | grep -Ei '^\s*ciphers\s+([^#]+,)?(3des-cbc|aes128-cbc|aes192-cbc|aes256-cbc|arcfour|arcfour128|arcfour256|blowfish-cbc|cast128-cbc|rijndael-cbc@lysator.liu.se)\b' | wc -l"
+run_command = subprocess.check_output(command, shell=True)
+ssh_only_strong_ciphers = run_command.decode("utf-8")
+
+ssh_only_strong_ciphers_re = "0"
+
+if re.match(ssh_only_strong_ciphers_re, ssh_only_strong_ciphers):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
