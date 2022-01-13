@@ -2093,6 +2093,36 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 501: Ensure password creation requirements are configured"
+check_description = "-"
+
+command = "sudo grep -G '^minlen' /etc/security/pwquality.conf 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+password_creation_requirements_1 = run_command.decode("utf-8")
+password_creation_requirements_1_re = "minlen = 9"
+
+command = "sudo grep -G '^minclass' /etc/security/pwquality.conf 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+password_creation_requirements_2 = run_command.decode("utf-8")
+password_creation_requirements_2_re = "minclass = 4"
+
+command = "sudo grep retry /etc/pam.d/password-auth 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+password_creation_requirements_3 = run_command.decode("utf-8")
+password_creation_requirements_3_re = ".*retry=3.*"
+
+command = "sudo grep retry /etc/pam.d/system-auth 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+password_creation_requirements_4 = run_command.decode("utf-8")
+password_creation_requirements_4_re = ".*retry=3.*"
+
+if re.match(password_creation_requirements_1_re, password_creation_requirements_1) and re.match(password_creation_requirements_2_re, password_creation_requirements_2) and re.match(password_creation_requirements_3_re, password_creation_requirements_3) and re.match(password_creation_requirements_4_re, password_creation_requirements_4):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
