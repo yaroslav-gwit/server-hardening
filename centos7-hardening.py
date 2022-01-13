@@ -1790,16 +1790,25 @@ command = "sudo find /etc/ssh -xdev -type f -name 'ssh_host_*_key' -exec stat {}
 run_command = subprocess.check_output(command, shell=True)
 ssh_host_key_files_permissions = run_command.decode("utf-8")
 
-regexp_ssh_host_key_files_permissions = ".*0600.*root.*root.*"
-
-if re.match(regexp_ssh_host_key_files_permissions, ssh_host_key_files_permissions):
+if re.match(".*0600.*root.*root.*", ssh_host_key_files_permissions):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
     task_list.append([check_name, Failed, check_description])
 
-print(ssh_host_key_files_permissions)
-print(regexp_ssh_host_key_files_permissions)
+
+check_name = "Page 452: Ensure permissions on SSH public host key files are configured"
+check_description = "-"
+
+command = "sudo find /etc/ssh -xdev -type f -name 'ssh_host_*_key.pub' -exec stat {} \; | grep \"Access: (\""
+run_command = subprocess.check_output(command, shell=True)
+ssh_host_pubkey_files_permissions = run_command.decode("utf-8")
+
+if re.match(".*0644.*root.*root.*", ssh_host_pubkey_files_permissions):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
 
 
 # Table printout #
