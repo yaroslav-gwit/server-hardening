@@ -2099,12 +2099,12 @@ check_description = "-"
 command = "sudo grep -G '^minlen' /etc/security/pwquality.conf 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 password_creation_requirements_1 = run_command.decode("utf-8")
-password_creation_requirements_1_re = "minlen = 9"
+password_creation_requirements_1_re = "^minlen = 9.*"
 
 command = "sudo grep -G '^minclass' /etc/security/pwquality.conf 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 password_creation_requirements_2 = run_command.decode("utf-8")
-password_creation_requirements_2_re = "minclass = 4"
+password_creation_requirements_2_re = "^minclass = 4.*"
 
 command = "sudo grep retry /etc/pam.d/password-auth 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
