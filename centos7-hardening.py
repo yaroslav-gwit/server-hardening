@@ -1854,7 +1854,7 @@ check_description = "-"
 
 command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(hostname) /etc/hosts | awk '{print $1}')\" | grep ignorerhosts"
 run_command = subprocess.check_output(command, shell=True)
-C = run_command.decode("utf-8").split()[1]
+ssh_ignore_rhosts_1 = run_command.decode("utf-8").split()[1]
 
 command = "sudo grep -Gi \"^ignorerhosts\" /etc/ssh/sshd_config 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
