@@ -1842,7 +1842,7 @@ command = "sudo grep -Gi \"^maxauthtries\" /etc/ssh/sshd_config 2>/dev/null || t
 run_command = subprocess.check_output(command, shell=True)
 ssh_maxauthtries_2 = run_command.decode("utf-8").split()[1]
 
-if ssh_maxauthtries_1 <= 4 and ssh_maxauthtries_2 <= 4:
+if int(ssh_maxauthtries_1) <= 4 and int(ssh_maxauthtries_2) <= 4:
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
