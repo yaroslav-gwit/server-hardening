@@ -1831,6 +1831,24 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 462: Ensure SSH MaxAuthTries is set to 4 or less"
+check_description = "-"
+
+command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(hostname) /etc/hosts | awk '{print $1}')\" | grep loglevel"
+run_command = subprocess.check_output(command, shell=True)
+ssh_maxauthtries_1 = run_command.decode("utf-8").split()[1]
+
+command = "sudo grep -Gi \"^maxauthtries\" /etc/ssh/sshd_config 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+ssh_maxauthtries_2 = run_command.decode("utf-8").split()[1]
+
+if ssh_maxauthtries_1 <= 4 and ssh_maxauthtries_2 <= 4:
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
