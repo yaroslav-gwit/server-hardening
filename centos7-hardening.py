@@ -2045,6 +2045,22 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 491: Ensure SSH PAM is enabled"
+check_description = "-"
+
+command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(hostname) /etc/hosts | awk '{print $1}')\" | grep -i usepam"
+run_command = subprocess.check_output(command, shell=True)
+ssh_use_pam_enabled = run_command.decode("utf-8")
+
+ssh_use_pam_enabled_re = "usepam yes"
+
+if re.match(ssh_use_pam_enabled_re, ssh_use_pam_enabled):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
