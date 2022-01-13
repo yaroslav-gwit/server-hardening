@@ -1783,6 +1783,29 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 449: Ensure permissions on SSH private host key files are configured"
+check_description = "-"
+
+command = "sudo find /etc/ssh -xdev -type f -name 'ssh_host_*_key' -exec stat {} \;"
+run_command = subprocess.check_output(command, shell=True)
+ssh_host_key_files_permissions = run_command.decode("utf-8")
+
+regexp_ssh_host_key_files_permissions = '''
+Access: (0640/-rw-r-----)  Uid: (    0/    root)   Gid: (  995/ssh_keys)
+Access: (0640/-rw-r-----)  Uid: (    0/    root)   Gid: (  995/ssh_keys)
+Access: (0640/-rw-r-----)  Uid: (    0/    root)   Gid: (  995/ssh_keys)
+'''
+
+if re.match(regexp_ssh_host_key_files_permissions, ssh_host_key_files_permissions):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+print(ssh_host_key_files_permissions)
+print(regexp_ssh_host_key_files_permissions)
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
