@@ -1791,9 +1791,9 @@ run_command = subprocess.check_output(command, shell=True)
 ssh_host_key_files_permissions = run_command.decode("utf-8")
 
 regexp_ssh_host_key_files_permissions = '''
-Access: (0640/-rw-r-----)  Uid: (    0/    root)   Gid: (  995/ssh_keys)
-Access: (0640/-rw-r-----)  Uid: (    0/    root)   Gid: (  995/ssh_keys)
-Access: (0640/-rw-r-----)  Uid: (    0/    root)   Gid: (  995/ssh_keys)
+.*0640.*root.*ssh_keys.*
+.*0640.*root.*ssh_keys.*
+.*0640.*root.*ssh_keys.*
 '''
 
 if re.match(regexp_ssh_host_key_files_permissions, ssh_host_key_files_permissions):
