@@ -1855,15 +1855,14 @@ check_description = "-"
 command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(hostname) /etc/hosts | awk '{print $1}')\" | grep ignorerhosts"
 run_command = subprocess.check_output(command, shell=True)
 ssh_ignore_rhosts_1 = run_command.decode("utf-8")
-print(ssh_ignore_rhosts_1)
 
 command = "sudo grep -Gi \"^ignorerhosts\" /etc/ssh/sshd_config 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 ssh_ignore_rhosts_2 = run_command.decode("utf-8")
-print(ssh_ignore_rhosts_1)
 
+ssh_ignore_rhosts_re = "[Ii]gnore[Rr]hosts yes"
 
-if re.match("[Ii]gnore[Rr]hosts yes", ssh_ignore_rhosts_1) and re.match("[Ii]gno[Rr]erhosts yes", ssh_ignore_rhosts_2):
+if re.match(ssh_ignore_rhosts_re, ssh_ignore_rhosts_1) and re.match(ssh_ignore_rhosts_re, ssh_ignore_rhosts_2):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
