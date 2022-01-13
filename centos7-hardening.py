@@ -1786,7 +1786,7 @@ else:
 check_name = "Page 449: Ensure permissions on SSH private host key files are configured"
 check_description = "-"
 
-command = "sudo find /etc/ssh -xdev -type f -name 'ssh_host_*_key' -exec stat {} \;"
+command = "sudo find /etc/ssh -xdev -type f -name 'ssh_host_*_key' -exec stat {} \; | grep \"Access: (\""
 run_command = subprocess.check_output(command, shell=True)
 ssh_host_key_files_permissions = run_command.decode("utf-8")
 
