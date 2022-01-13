@@ -1900,9 +1900,29 @@ command = "sudo grep -Gi \"^permitrootlogin\" /etc/ssh/sshd_config 2>/dev/null |
 run_command = subprocess.check_output(command, shell=True)
 ssh_permit_root_login_2 = run_command.decode("utf-8")
 
-ssh_permit_root_login_re = "[Pp]ermit[Rr]oot[Ll]ogin yes"
+ssh_permit_root_login_re = "[Pp]ermit[Rr]oot[Ll]ogin no"
 
 if re.match(ssh_permit_root_login_re, ssh_permit_root_login_1) and re.match(ssh_permit_root_login_re, ssh_permit_root_login_2):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+check_name = "Page 470: Ensure SSH PermitEmptyPasswords is disabled"
+check_description = "-"
+
+command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(hostname) /etc/hosts | awk '{print $1}')\" | grep permitemptypasswords"
+run_command = subprocess.check_output(command, shell=True)
+ssh_permit_empty_passwords_1 = run_command.decode("utf-8")
+
+command = "sudo grep -Gi \"^permitemptypasswords\" /etc/ssh/sshd_config 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+ssh_permit_empty_passwords_2 = run_command.decode("utf-8")
+
+ssh_permit_empty_passwords_re = "[Pp]ermit[Ee]mpty[Pp]asswords no"
+
+if re.match(ssh_permit_empty_passwords_re, ssh_permit_empty_passwords_1) and re.match(ssh_permit_empty_passwords_re, ssh_permit_empty_passwords_2):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
