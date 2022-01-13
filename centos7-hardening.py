@@ -2099,26 +2099,26 @@ check_description = "-"
 command = "sudo grep -G '^minlen' /etc/security/pwquality.conf 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 password_creation_requirements_1 = run_command.decode("utf-8")
-password_creation_requirements_1_re = "^minlen = 9"
-print(password_creation_requirements_1_re + " vs " + password_creation_requirements_1)
+password_creation_requirements_1_re = "^minlen = 8"
+# print(password_creation_requirements_1_re + " vs " + password_creation_requirements_1)
 
 command = "sudo grep -G '^minclass' /etc/security/pwquality.conf 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 password_creation_requirements_2 = run_command.decode("utf-8")
 password_creation_requirements_2_re = "^minclass = 4"
-print(password_creation_requirements_2_re + " vs " + password_creation_requirements_2)
+# print(password_creation_requirements_2_re + " vs " + password_creation_requirements_2)
 
 command = "sudo grep retry /etc/pam.d/password-auth 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 password_creation_requirements_3 = run_command.decode("utf-8")
 password_creation_requirements_3_re = ".*retry=3.*"
-print(password_creation_requirements_3_re + " vs " + password_creation_requirements_3)
+# print(password_creation_requirements_3_re + " vs " + password_creation_requirements_3)
 
 command = "sudo grep retry /etc/pam.d/system-auth 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 password_creation_requirements_4 = run_command.decode("utf-8")
 password_creation_requirements_4_re = ".*retry=3.*"
-print(password_creation_requirements_4_re + " vs " + password_creation_requirements_4)
+# print(password_creation_requirements_4_re + " vs " + password_creation_requirements_4)
 
 if re.match(password_creation_requirements_1_re, password_creation_requirements_1) and re.match(password_creation_requirements_2_re, password_creation_requirements_2) and re.match(password_creation_requirements_3_re, password_creation_requirements_3) and re.match(password_creation_requirements_4_re, password_creation_requirements_4):
     task_list.append([check_name, Passed, check_description])
