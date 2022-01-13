@@ -1876,7 +1876,7 @@ command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(
 run_command = subprocess.check_output(command, shell=True)
 ssh_host_based_auth_1 = run_command.decode("utf-8")
 
-command = "sudo grep -Gi \"^ignorerhosts\" /etc/ssh/sshd_config 2>/dev/null || true"
+command = "sudo grep -Gi \"^hostbased\" /etc/ssh/sshd_config 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 ssh_host_based_auth_1 = run_command.decode("utf-8")
 
