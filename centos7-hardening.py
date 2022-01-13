@@ -2015,7 +2015,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Page 484: Ensure SSH LoginGraceTime is set to one minute or less"
+check_name = "Page 487: Ensure SSH LoginGraceTime is set to one minute or less"
 check_description = "-"
 
 command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(hostname) /etc/hosts | awk '{print $1}')\" | grep logingracetime"
@@ -2023,6 +2023,22 @@ run_command = subprocess.check_output(command, shell=True)
 ssh_login_grace_time = run_command.decode("utf-8").split()[1]
 
 if int(ssh_login_grace_time) >= 1 and int(ssh_login_grace_time) <= 60:
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+check_name = "Page 489: Ensure SSH warning banner is configured"
+check_description = "-"
+
+command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(hostname) /etc/hosts | awk '{print $1}')\" | grep banner"
+run_command = subprocess.check_output(command, shell=True)
+ssh_banner = run_command.decode("utf-8")
+
+ssh_banner_re = "banner /etc/issue.net"
+
+if re.match(ssh_banner_re, ssh_banner):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
