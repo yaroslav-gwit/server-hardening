@@ -1834,7 +1834,7 @@ else:
 check_name = "Page 462: Ensure SSH MaxAuthTries is set to 4 or less"
 check_description = "-"
 
-command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(hostname) /etc/hosts | awk '{print $1}')\" | grep loglevel"
+command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(hostname) /etc/hosts | awk '{print $1}')\" | grep maxauthtries"
 run_command = subprocess.check_output(command, shell=True)
 ssh_maxauthtries_1 = run_command.decode("utf-8").split()[1]
 
