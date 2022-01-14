@@ -2179,10 +2179,10 @@ run_command = subprocess.check_output(command, shell=True)
 try:
     password_expiration_90_2 = run_command.decode("utf-8").split(":")[1]
 except:
-    password_expiration_90_2 = ""
+    password_expiration_90_2 = "Empty"
 
 
-if re.match(password_expiration_90_re, password_expiration_90) and (password_expiration_90_2 <= 90 or not password_expiration_90_2):
+if re.match(password_expiration_90_re, password_expiration_90) and (password_expiration_90_2 <= 90 or password_expiration_90_2 == "Empty"):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
