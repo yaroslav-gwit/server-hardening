@@ -2181,12 +2181,18 @@ try:
 except:
     password_expiration_90_2 = "Empty"
 
-
-if re.match(password_expiration_90_1_re, password_expiration_90_1) and (password_expiration_90_2 <= 90 or password_expiration_90_2 == "Empty"):
-    task_list.append([check_name, Passed, check_description])
-    total_score = total_score + lvl1_plus
+if type(password_expiration_90_2) == int:
+    if re.match(password_expiration_90_1_re, password_expiration_90_1) and (password_expiration_90_2 <= 90):
+        task_list.append([check_name, Passed, check_description])
+        total_score = total_score + lvl1_plus
+    else:
+        task_list.append([check_name, Failed, check_description])
 else:
-    task_list.append([check_name, Failed, check_description])
+    if re.match(password_expiration_90_1_re, password_expiration_90_1) and (password_expiration_90_2 == "Empty"):
+        task_list.append([check_name, Passed, check_description])
+        total_score = total_score + lvl1_plus
+    else:
+        task_list.append([check_name, Failed, check_description])
 
 
 # check_name = "Page 516: Ensure password expiration is 365 days or less"
