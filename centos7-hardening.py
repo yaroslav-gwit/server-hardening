@@ -2166,6 +2166,21 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 511: Ensure password expiration is 365 days or less"
+check_description = "-"
+
+command = "sudo grep -Gi \"^pass_max_days\" /etc/login.defs 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+password_expiration_90 = run_command.decode("utf-8")
+
+password_expiration_90_re = "PASS_MAX_DAYS\s*90"
+
+if re.match(password_expiration_90_re, password_expiration_90):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
