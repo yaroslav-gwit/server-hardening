@@ -2139,6 +2139,22 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 509: Ensure password hashing algorithm is SHA-512"
+check_description = "-"
+
+command = "sudo grep sha512 /etc/pam.d/system-auth /etc/pam.d/password-auth 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+hashing_algo_sha512 = run_command.decode("utf-8")
+
+hashing_algo_sha512_re = ".*sufficient.*sha512.*\s.*sufficient.*sha512.*"
+
+if re.match(hashing_algo_sha512_re, hashing_algo_sha512):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
