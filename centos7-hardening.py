@@ -2174,7 +2174,7 @@ run_command = subprocess.check_output(command, shell=True)
 password_expiration_90_1 = run_command.decode("utf-8")
 password_expiration_90_1_re = "PASS_MAX_DAYS\s*90"
 
-command = "sudo grep -E '^[^:]+:[^!*]' /etc/shadow | cut -d: -f1,5 | head -1 | grep -Gv \"^root\""
+command = "sudo grep -E '^[^:]+:[^!*]' /etc/shadow | cut -d: -f1,5 | head -1 | grep -Gv \"^root\" 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 try:
     password_expiration_90_2 = run_command.decode("utf-8").split(":")[1]
