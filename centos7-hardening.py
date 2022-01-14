@@ -2123,16 +2123,16 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Page 504: Ensure SSH MaxSessions is limited"
+check_name = "Page 504: Ensure lockout for failed password attempts is configured"
 check_description = "-"
 
-command = "sudo sshd -T -C user=root -C host=\"$(hostname)\" -C addr=\"$(grep $(hostname) /etc/hosts | awk '{print $1}')\" | grep -i maxsessions"
+command = "sudo grep unlock /etc/pam.d/system-auth /etc/pam.d/password-auth 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
-ssh_max_sessions = run_command.decode("utf-8")
+failed_password_lockout = run_command.decode("utf-8")
 
-ssh_max_sessions_re = "maxsessions 10"
+failed_password_lockout_re = ".*unlock_time=900\s.*unlock_time=900\s.*unlock_time=900\s.*unlock_time=900"
 
-if re.match(ssh_max_sessions_re, ssh_max_sessions):
+if re.match(failed_password_lockout_re, failed_password_lockout):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
