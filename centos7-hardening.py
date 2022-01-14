@@ -2197,6 +2197,22 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 519: Ensure password expiration warning days is 7 or more"
+check_description = "-"
+
+command = "sudo grep -Gi \"^pass_warn_age\" /etc/login.defs 2>/dev/null || true"
+run_command = subprocess.check_output(command, shell=True)
+password_exp_warning_days = run_command.decode("utf-8")
+
+password_exp_warning_days_re = "PASS_WARN_AGE\s*30"
+
+if re.match(password_exp_warning_days_re, password_exp_warning_days):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
