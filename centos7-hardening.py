@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # native imports
+from asyncio.subprocess import DEVNULL
 import subprocess
 import argparse
 import re
@@ -2233,7 +2234,7 @@ check_name = "Page 523: Ensure all users last password change date is in the pas
 check_description = "-"
 
 command = "sudo for usr in $(cut -d: -f1 /etc/shadow); do [[ $(chage --list $usr | grep '^Last password change' | cut -d: -f2) > $(date) ]] && echo \"$usr :$(chage --list $usr | grep '^Last password change' | cut -d: -f2)\"; done | wc -l"
-run_command = subprocess.call(command, shell=True)
+run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
 pwd_change_date_past = run_command.decode("utf-8")
 pwd_change_date_past_re = "0"
 
