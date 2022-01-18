@@ -2283,10 +2283,10 @@ else:
 check_name = "Page 528: Ensure default user shell timeout is configured"
 check_description = "-"
 
-command = "sudo " + bash_scripts_location + "check_usr_shell_timeout.sh"
+command = "sudo " + bash_scripts_location + "check_usr_shell_timeout.sh | grep PASSED | wc -l"
 run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
 check_usr_shell_timeout = run_command.decode("utf-8")
-check_usr_shell_timeout_re = "0"
+check_usr_shell_timeout_re = "1"
 
 if re.match(root_account_gid_is_0_re, root_account_gid_is_0):
     task_list.append([check_name, Passed, check_description])
