@@ -2245,6 +2245,26 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 524: Ensure system accounts are secured"
+check_description = "-"
+
+command = "awk -F: '($1!=\"root\" && $1!=\"sync\" && $1!=\"shutdown\" && $1!=\"halt\" && $1!~/^\+/ && $3<'\"$(awk '/^\s*UID_MIN/{print $2}' /etc/login.defs)\"' && $7!=\"'\"$(which nologin)\"'\" && $7!=\"'\"/sbin/nologin\"'\" && $7!=\"/bin/false\") {print}' /etc/passwd | wc -l"
+run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
+system_accouns_are_secured_1 = run_command.decode("utf-8")
+
+command = "awk -F: '($1!=\"root\" && $1!~/^\+/ && $3<'\"$(awk '/^\s*UID_MIN/{print $2}' /etc/login.defs)\"') {print $1}' /etc/passwd | xargs -I '{}' passwd -S '{}' | awk '($2!=\"L\" && $2!=\"LK\") {print $1}' | wc -l"
+run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
+system_accouns_are_secured_2 = run_command.decode("utf-8")
+
+system_accouns_are_secured_re = "0"
+
+if re.match(system_accouns_are_secured_re, system_accouns_are_secured_1) and re.match(system_accouns_are_secured_re, system_accouns_are_secured_2):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
