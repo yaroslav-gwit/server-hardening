@@ -2265,6 +2265,21 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 526: Ensure default group for the root account is GID 0"
+check_description = "-"
+
+command = "grep \"^root:\" /etc/passwd | cut -f4 -d:"
+run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
+root_account_gid_is_0 = run_command.decode("utf-8")
+root_account_gid_is_0_re = "0"
+
+if re.match(root_account_gid_is_0_re, root_account_gid_is_0):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
