@@ -2232,7 +2232,7 @@ else:
 check_name = "Page 523: Ensure all users last password change date is in the past"
 check_description = "-"
 
-command = "sudo for usr in $(cut -d: -f1 /etc/shadow); do [[ $(chage --list $usr | grep '^Last password change' | cut -d: -f2) > $(date) ]] && echo \"$usr :$(chage --list $usr | grep '^Last password change' | cut -d: -f2)\"; done | wc -l 2>/dev/null || true"
+command = "sudo for usr in $(cut -d: -f1 /etc/shadow); do [[ $(chage --list $usr | grep '^Last password change' || true | cut -d: -f2) > $(date) ]] && echo \"$usr :$(chage --list $usr | grep '^Last password change' || true | cut -d: -f2)\"; done | wc -l"
 run_command = subprocess.check_output(command, shell=True)
 pwd_change_date_past = run_command.decode("utf-8")
 pwd_change_date_past_re = "0"
