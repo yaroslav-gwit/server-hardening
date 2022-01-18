@@ -2300,15 +2300,14 @@ check_description = "-"
 
 command = "sudo " + bash_scripts_location + "check_default_user_umask.sh"
 run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
-check_usr_shell_timeout = run_command.decode("utf-8")
-check_usr_shell_timeout_re = "1"
+default_user_umask_set = run_command.decode("utf-8")
+default_user_umask_set_re = "Default user umask is set"
 
-if re.match(root_account_gid_is_0_re, root_account_gid_is_0):
+if re.match(default_user_umask_set_re, default_user_umask_set):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
     task_list.append([check_name, Failed, check_description])
-
 
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
