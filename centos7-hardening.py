@@ -2298,7 +2298,7 @@ else:
 check_name = "Page 531: Ensure default user umask is configured"
 check_description = "-"
 
-command = "sudo bash" + bash_scripts_location + "check_default_user_umask.sh"
+command = "sudo bash " + bash_scripts_location + "check_default_user_umask.sh"
 run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
 default_user_umask_set = run_command.decode("utf-8")
 default_user_umask_set_re = "Default user umask is set"
