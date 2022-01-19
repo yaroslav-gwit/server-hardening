@@ -2315,7 +2315,7 @@ check_description = "-"
 command = "grep -G \"^auth.*required\" /etc/pam.d/su"
 run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
 restricted_su_command = run_command.decode("utf-8")
-restricted_su_command_re = "Default user umask is set"
+restricted_su_command_re = ".*pam_wheel.so use_uid group=wheel"
 
 if re.match(restricted_su_command_re, restricted_su_command):
     task_list.append([check_name, Passed, check_description])
