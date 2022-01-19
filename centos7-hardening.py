@@ -2369,6 +2369,21 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 551: Ensure permissions on /etc/shadow- are configured"
+check_description = "-"
+
+command = "stat /etc/shadow- | grep \"Access: (\""
+run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
+etc_shadow_permissons_ = run_command.decode("utf-8")
+etc_shadow_permissons_re_ = ".*0000.*root.*root"
+
+if re.match(etc_shadow_permissons_re_, etc_shadow_permissons_):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
