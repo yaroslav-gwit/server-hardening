@@ -7,7 +7,6 @@ import re
 from os.path import exists
 
 # 3rd party imports
-import jinja2
 from colorama import Fore, Back, Style
 from tabulate import tabulate
 
@@ -2309,6 +2308,22 @@ if re.match(default_user_umask_set_re, default_user_umask_set):
 else:
     task_list.append([check_name, Failed, check_description])
 
+
+check_name = "Page 538: Ensure access to the su command is restricted"
+check_description = "-"
+
+command = "grep -G \"^auth.*required\" /etc/pam.d/su"
+run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
+restricted_su_command = run_command.decode("utf-8")
+restricted_su_command_re = "Default user umask is set"
+
+if re.match(restricted_su_command_re, restricted_su_command):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
@@ -2319,4 +2334,5 @@ print(" - Check if xorg server components are needed. Page 163.")
 print(" - Check if cups is needed. Page 167.")
 print(" - Check if rpcbind is needed. Page 196.")
 print(" - Follow up on the: 5.3.4 Ensure SSH access is limited (Automated). Page 455.")
+print(" - Follow up on the: 5.6 Ensure root login is restricted to system console. Page 536.")
 print()
