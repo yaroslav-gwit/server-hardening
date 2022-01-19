@@ -2347,7 +2347,22 @@ run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
 etc_password_permissons_ = run_command.decode("utf-8")
 etc_password_permissons_re_ = ".*0644.*root.*root"
 
-if re.match(etc_password_permissons_re, etc_password_permissons):
+if re.match(etc_password_permissons_re_, etc_password_permissons_):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+check_name = "Page 549: Ensure permissions on /etc/shadow are configured"
+check_description = "-"
+
+command = "stat /etc/shadow | grep \"Access: (\""
+run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
+etc_shadow_permissons = run_command.decode("utf-8")
+etc_shadow_permissons_re = ".*0000.*root.*root"
+
+if re.match(etc_shadow_permissons_re, etc_shadow_permissons):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
