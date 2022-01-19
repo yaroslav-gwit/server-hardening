@@ -2459,6 +2459,21 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 563: Ensure no unowned files or directories exist"
+check_description = "-"
+
+command = "df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser | wc -l"
+run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
+no_unowned_files_exist = run_command.decode("utf-8")
+no_unowned_files_exist_re = "0"
+
+if re.match(no_unowned_files_exist_re, no_unowned_files_exist):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
