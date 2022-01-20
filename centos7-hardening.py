@@ -2477,7 +2477,7 @@ else:
 check_name = "Page 565: Ensure no ungrouped files or directories exist"
 check_description = "-"
 
-command = "df --local -P | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -nogroup"
+command = "df --local -P | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -nogroup | wc -l"
 run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
 no_ungrouped_files_exist = run_command.decode("utf-8")
 no_ungrouped_files_exist_re = "0"
