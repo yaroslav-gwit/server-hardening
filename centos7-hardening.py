@@ -2489,6 +2489,21 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 567: Audit SUID executables"
+check_description = "-"
+
+command = "df --local -P | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -type f -perm -4000"
+run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
+audir_suid_executables = run_command.decode("utf-8")
+audir_suid_executables_re = "/usr/bin/passwd\s/usr/bin/chage\s/usr/bin/gpasswd\s/usr/bin/umount\s/usr/bin/newgrp\s/usr/bin/chfn\s/usr/bin/chsh\s/usr/bin/mount\s/usr/bin/pkexec\s/usr/bin/crontab\s/usr/bin/su\s/usr/bin/at\s/usr/bin/sudo\s/usr/bin/staprun\s/usr/sbin/pam_timestamp_check\s/usr/sbin/unix_chkpwd\s/usr/sbin/usernetctl\s/usr/sbin/userhelper\s/usr/sbin/mount.nfs\s/usr/lib/polkit-1/polkit-agent-helper-1\s/usr/libexec/dbus-1/dbus-daemon-launch-helper\s/usr/libexec/abrt-action-install-debuginfo-to-abrt-cache"
+
+if re.match(no_ungrouped_files_exist_re, no_ungrouped_files_exist):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
