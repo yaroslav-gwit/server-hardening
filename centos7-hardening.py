@@ -2519,6 +2519,21 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 574: Ensure /etc/shadow password fields are not empty"
+check_description = "-"
+
+command = "awk -F: '($2 == \"\" ) { print $1 \" does not have a password \"}' /etc/shadow | wc -l"
+run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
+etcshadow_password_fields_not_empty = run_command.decode("utf-8")
+etcshadow_password_fields_not_empty_re = "0"
+
+if re.match(etcshadow_password_fields_not_empty_re, etcshadow_password_fields_not_empty):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
