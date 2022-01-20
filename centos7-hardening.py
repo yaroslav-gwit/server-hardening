@@ -2534,6 +2534,21 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 576: Ensure all groups in /etc/passwd exist in /etc/group"
+check_description = "-"
+
+command = "bash " + bash_scripts_location + "check_default_user_umask.sh | wc -l"
+run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
+all_groups_exist_in_passwd_and_group = run_command.decode("utf-8")
+all_groups_exist_in_passwd_and_group_re = "0"
+
+if re.match(all_groups_exist_in_passwd_and_group_re, all_groups_exist_in_passwd_and_group):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
