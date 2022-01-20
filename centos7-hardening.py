@@ -2504,6 +2504,21 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 572: Ensure accounts in /etc/passwd use shadowed passwords"
+check_description = "-"
+
+command = "awk -F: '($2 != \"x\" ) { print $1 \" is not set to shadowed passwords \"}' /etc/passwd | wc -l"
+run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
+accounts_in_etcpasswd_shadowed = run_command.decode("utf-8")
+accounts_in_etcpasswd_shadowed_re = "0"
+
+if re.match(accounts_in_etcpasswd_shadowed_re, accounts_in_etcpasswd_shadowed):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
