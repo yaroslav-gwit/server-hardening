@@ -2549,6 +2549,26 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 578: Ensure shadow group is empty"
+check_description = "-"
+
+command = "awk -F: '($1==\"shadow\") {print $NF}' /etc/group | wc -l"
+run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
+ensure_shadow_group_empty_1 = run_command.decode("utf-8")
+ensure_shadow_group_empty_1_re = "0"
+
+command = "awk -F: -v GID=\"$(awk -F: '($1==\"shadow\") {print $3}' /etc/group)\" '($4==GID) {print $1}' /etc/passwd | wc -l"
+run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
+ensure_shadow_group_empty_2 = run_command.decode("utf-8")
+ensure_shadow_group_empty_2_re = "0"
+
+if re.match(ensure_shadow_group_empty_1_re, ensure_shadow_group_empty_1) and re.match(ensure_shadow_group_empty_2_re, ensure_shadow_group_empty_2):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
