@@ -1153,7 +1153,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Source routed packets are not accepted"
+check_name = "Page 228: Ensure source routed packets are not accepted"
 check_description = "-"
 
 command = "sudo sysctl net.ipv4.conf.all.accept_source_route"
@@ -1171,7 +1171,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "ICMP redirects are not accepted"
+check_name = "Page 232: Ensure ICMP redirects are not accepted"
 check_description = "-"
 
 command = "sudo sysctl net.ipv4.conf.all.accept_redirects"
@@ -1189,7 +1189,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Secure ICMP redirects are not accepted"
+check_name = "Page 235: Ensure secure ICMP redirects are not accepted"
 check_description = "-"
 
 command = "sudo sysctl net.ipv4.conf.all.secure_redirects"
@@ -1207,7 +1207,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Suspicious packets are logged"
+check_name = "Page 237: Ensure suspicious packets are logged"
 check_description = "-"
 
 command = "sudo sysctl net.ipv4.conf.all.log_martians"
@@ -1225,7 +1225,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Broadcast ICMP requests are ignored"
+check_name = "Page 239: Ensure broadcast ICMP requests are ignored"
 check_description = "-"
 
 command = "sudo sysctl net.ipv4.icmp_echo_ignore_broadcasts"
@@ -1239,7 +1239,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Bogus ICMP responses are ignored"
+check_name = "Page 241: Ensure bogus ICMP responses are ignored"
 check_description = "-"
 
 command = "sudo sysctl net.ipv4.icmp_ignore_bogus_error_responses"
@@ -1253,7 +1253,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Reverse Path Filtering is enabled"
+check_name = "Page 243: Ensure Reverse Path Filtering is enabled"
 check_description = "-"
 
 command = "sudo sysctl net.ipv4.conf.all.rp_filter"
@@ -1271,7 +1271,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "TCP SYN Cookies is enabled"
+check_name = "Page 245: Ensure TCP SYN Cookies is enabled"
 check_description = "-"
 
 command = "sudo sysctl net.ipv4.tcp_syncookies"
@@ -1285,7 +1285,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Firewalld is installed"
+check_name = "Page 257: Ensure firewalld is installed"
 check_description = "-"
 
 command = "sudo rpm -q firewalld 2>/dev/null || true"
@@ -1303,7 +1303,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "iptables-services not installed with firewalld"
+check_name = "Page 259: Ensure iptables-services not installed with firewalld"
 check_description = "-"
 
 command = "sudo rpm -q iptables-services 2>/dev/null || true"
