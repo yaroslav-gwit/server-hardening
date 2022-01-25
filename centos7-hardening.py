@@ -2825,6 +2825,7 @@ print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(
 print(bloded_string_TotalScore + ": " + str(total_score) + " out of " + str(len(task_list) + 1))
 
 print(((total_score / (len(task_list) + 1)) * 100))
+print(((total_score / len(task_list) + 1) * 100))
 # if ((total_score / len(task_list) + 1) * 100) > 95:
 if ((total_score / len(task_list) + 1) * 100) > 950:
     status_string = "Green"
