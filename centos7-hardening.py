@@ -1107,7 +1107,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Disable wireless"
+check_name = "Page 218: Ensure wireless interfaces are disabled"
 check_description = "Run this command to disable wireless: nmcli radio all off"
 
 command = "sudo nmcli radio all | awk '{print $2 \" \" $4}' | tail -n +2"
@@ -1121,7 +1121,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "IP forwarding is disabled"
+check_name = "Page 222: Ensure IP forwarding is disabled"
 check_description = "-"
 
 command = "sudo sysctl net.ipv4.ip_forward"
@@ -1135,7 +1135,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Packet redirect sending is disabled"
+check_name = "Page 225: Ensure packet redirect sending is disabled"
 check_description = "-"
 
 command = "sudo sysctl net.ipv4.conf.all.send_redirects"
