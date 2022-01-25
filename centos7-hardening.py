@@ -2824,12 +2824,21 @@ else:
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score) + " out of " + str(len(task_list) + 1))
 
-bolded_string_SystemStatus = "\033[1m" + "Green" + "\033[0m"
-Failed = Fore.RED + 'Failed' + "\033[0m"
-GreenStatus = Fore.GREEN + bolded_string_SystemStatus + "\033[0m"
-Fixed = Fore.YELLOW + 'Fixed' + "\033[0m"
-RequiresManualFix = Fore.MAGENTA + 'Requires manual fix' + "\033[0m"
-print("System status: " + GreenStatus)
+
+if ((total_score / len(task_list) + 1) * 100) > 95:
+    status_string = "Green"
+    status_foreground = Fore.GREEN
+elif ((total_score / len(task_list) + 1) * 100) <= 85:
+    status_string = "Yellow"
+    status_foreground = Fore.MAGENTA
+elif ((total_score / len(task_list) + 1) * 100) < 85:
+    status_string = "Red"
+    status_foreground = Fore.Red
+
+bolded_string_SystemStatus = "\033[1m" + status_string + "\033[0m"
+SystemStatus = status_foreground + bolded_string_SystemStatus + "\033[0m"
+print("System status: " + SystemStatus)
+
 
 print()
 print("To do:")
