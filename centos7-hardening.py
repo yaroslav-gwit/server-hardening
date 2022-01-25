@@ -737,7 +737,21 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "xinetd is not installed"
+check_name = "Page 146: Ensure XDCMP is not enabled"
+check_description = "-"
+
+command = "sudo grep -Eis '^\\s*Enable\\s*=\\s*true' /etc/gdm/custom.conf | wc -l"
+run_command = subprocess.check_output(command, shell=True)
+xdcmp_is_not_enabled = run_command.decode("utf-8")
+
+if re.match("0", xdcmp_is_not_enabled):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+check_name = "Page 152: Ensure xinetd is not installed"
 check_description = "-"
 
 command = "sudo rpm -q xinetd || true"
@@ -751,7 +765,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Time sync is in use"
+check_name = "Page 156: Ensure time synchronization is in use"
 check_description = "This check shows if chrony is installed"
 
 command = "sudo rpm -q chrony || true"
@@ -765,7 +779,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "chrony is configured"
+check_name = "Page 158: Ensure chrony is configured"
 check_description = "-"
 
 command = "sudo grep -G \"^server\\|^pool\" /etc/chrony.conf | wc -l"
