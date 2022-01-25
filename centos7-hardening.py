@@ -801,7 +801,21 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "DHCP server is not installed"
+check_name = "Page 167: Ensure CUPS is not installed"
+check_description = "-"
+
+command = "sudo rpm -q cups || true"
+run_command = subprocess.check_output(command, shell=True)
+cups_is_not_installed = run_command.decode("utf-8")
+
+if re.match("package avahi-autoipd is not installed", cups_is_not_installed):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+check_name = "Page 169: Ensure DHCP Server is not installed"
 check_description = "-"
 
 command = "sudo rpm -q dhcp || true"
@@ -815,7 +829,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "LDAP server is not installed"
+check_name = "Page 171: Ensure LDAP server is not installed"
 check_description = "-"
 
 command = "sudo rpm -q openldap-servers || true"
@@ -829,7 +843,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "DNS server is not installed"
+check_name = "Page 173: Ensure DNS Server is not installed"
 check_description = "-"
 
 command = "sudo rpm -q bind || true"
@@ -843,7 +857,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "FTP server is not installed"
+check_name = "Page 175: Ensure FTP Server is not installed "
 check_description = "-"
 
 command = "sudo rpm -q vsftpd || true"
@@ -857,8 +871,8 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "HTTP server (apache2) is not installed"
-check_description = "-"
+check_name = "Page 177: Ensure HTTP server is not installed"
+check_description = "This only checks if Apache is installed (for now)"
 
 command = "sudo rpm -q httpd || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -871,7 +885,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "IMAP and POP3 (dovecot) server is not installed"
+check_name = "Page 179: Ensure IMAP and POP3 server is not installed "
 check_description = "-"
 
 command = "sudo rpm -q dovecot || true"
@@ -885,8 +899,8 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "SAMBA is not installed"
-check_description = "-"
+check_name = "Page 181: Ensure Samba is not installed"
+check_description = "Samba is required by ICR staff to access shared folders"
 
 command = "sudo rpm -q samba || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -899,7 +913,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "HTTP Proxy Server is not installed"
+check_name = "Page 183: Ensure HTTP Proxy Server is not installed"
 check_description = "-"
 
 command = "sudo rpm -q squid || true"
@@ -913,7 +927,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "net-snmp is not installed"
+check_name = "Page 185: Ensure net-snmp is not installed"
 check_description = "-"
 
 command = "sudo rpm -q net-snmp || true"
@@ -927,7 +941,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "NIS server is not installed"
+check_name = "Page 187: Ensure NIS server is not installed"
 check_description = "-"
 
 command = "sudo rpm -q ypserv || true"
@@ -941,7 +955,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "telnet-server is not installed"
+check_name = "Page 189: Ensure telnet-server is not installed "
 check_description = "-"
 
 command = "sudo rpm -q telnet-server || true"
@@ -955,7 +969,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "MTA is configured for local-only mode"
+check_name = "Page 191: Ensure mail transfer agent is configured for local-only mode"
 check_description = "-"
 
 command = "sudo ss -lntu | grep -E ':25\s' | grep -E -v '\s(127.0.0.1|\[?::1\]?):25\s' | wc -l"
@@ -969,7 +983,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "nfs-utils is not installed (or nfs server disabled)"
+check_name = "Page 193: Ensure nfs-utils is not installed or the nfs-server service is masked"
 check_description = "-"
 
 command = "sudo rpm -q nfs-utils || true"
@@ -2771,8 +2785,6 @@ print()
 print("To do:")
 print(" - Configure and check automatic updates. Page 148.")
 print(" - Check if xorg server components are needed. Page 163.")
-print(" - Check if cups is needed. Page 167.")
-print(" - Check if rpcbind is needed. Page 196.")
 print(" - Follow up on: Ensure nonessential services are removed or masked. Page 211.")
 print(" - Follow up on the: 5.3.4 Ensure SSH access is limited (Automated). Page 455.")
 print(" - Follow up on the: 5.6 Ensure root login is restricted to system console. Page 536.")
