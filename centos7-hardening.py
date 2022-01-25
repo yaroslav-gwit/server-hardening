@@ -2836,7 +2836,7 @@ elif ((total_score / len(task_list) + 1) * 100) < 100:
 # elif ((total_score / len(task_list) + 1) * 100) < 85:
 elif ((total_score / len(task_list) + 1) * 100) < 96:
     status_string = "Red"
-    status_foreground = Fore.Red
+    status_foreground = Fore.RED
 
 bolded_string_SystemStatus = "\033[1m" + status_string + "\033[0m"
 SystemStatus = status_foreground + bolded_string_SystemStatus + "\033[0m"
