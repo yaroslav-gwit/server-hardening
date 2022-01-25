@@ -2689,6 +2689,21 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 595: Ensure users' home directories permissions are 750 or more restrictive"
+check_description = "-"
+
+command = "bash " + bash_scripts_location + "check_user_home_is750or_less.sh | wc -l"
+run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
+user_home_is_750_or_less = run_command.decode("utf-8")
+user_home_is_750_or_less_re = "0"
+
+if re.match(user_home_is_750_or_less_re, user_home_is_750_or_less):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
