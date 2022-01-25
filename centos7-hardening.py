@@ -2749,6 +2749,21 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
+check_name = "Page 604: Ensure no users have .rhosts files"
+check_description = "-"
+
+command = "bash " + bash_scripts_location + "check_no_rhosts_files.sh | wc -l"
+run_command = subprocess.check_output(command, shell=True, stderr=DEVNULL)
+no_users_have_rhosts_files = run_command.decode("utf-8")
+no_users_have_rhosts_files_re = "0"
+
+if re.match(no_users_have_rhosts_files_re, no_users_have_rhosts_files):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score))
