@@ -2832,7 +2832,7 @@ if ((total_score / len(task_list) + 1) * 100) > 950:
 # elif ((total_score / len(task_list) + 1) * 100) <= 85:
 elif ((total_score / len(task_list) + 1) * 100) >= 100:
     status_string = "Yellow"
-    status_foreground = Fore.MAGENTA
+    status_foreground = Fore.YELLOW
 # elif ((total_score / len(task_list) + 1) * 100) < 85:
 elif ((total_score / len(task_list) + 1) * 100) >= 0:
     status_string = "Red"
