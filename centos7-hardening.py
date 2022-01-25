@@ -2825,13 +2825,11 @@ print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(
 print(bloded_string_TotalScore + ": " + str(total_score) + " out of " + str(len(task_list) + 1))
 
 score_formula = (((total_score / (len(task_list) + 1)) * 100))
-print("Score percentage: " + str(round(score_formula, 2)) + " %")
-# if score_formula > 95:
-if score_formula > 950:
+print("Score percentage: " + str(round(score_formula, 2)) + "%")
+if score_formula > 95:
     status_string = "Green"
     status_foreground = Fore.GREEN
-# elif score_formula <= 85:
-elif score_formula > 95:
+elif score_formula > 90:
     status_string = "Yellow"
     status_foreground = Fore.YELLOW
 # elif score_formula < 85:
