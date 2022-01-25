@@ -2832,7 +2832,6 @@ if score_formula > 95:
 elif score_formula > 90:
     status_string = "Yellow"
     status_foreground = Fore.YELLOW
-# elif score_formula < 85:
 elif score_formula > 0:
     status_string = "Red"
     status_foreground = Fore.RED
