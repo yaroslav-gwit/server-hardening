@@ -783,7 +783,21 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Avahi Server is not installed"
+check_name = "Page 163: Ensure X11 Server components are not installed"
+check_description = "Some xorg packages are required by ICR staff"
+
+command = "sudo rpm -qa xorg-x11-server* | wc -l || true"
+run_command = subprocess.check_output(command, shell=True)
+xorg_is_not_installed = run_command.decode("utf-8")
+
+if re.match("0", xorg_is_not_installed):
+    task_list.append([check_name, Passed, check_description])
+    total_score = total_score + lvl1_plus
+else:
+    task_list.append([check_name, Failed, check_description])
+
+
+check_name = "Page 165: Ensure Avahi Server is not installed"
 check_description = "-"
 
 command = "sudo rpm -q avahi-autoipd || true"
@@ -802,7 +816,7 @@ else:
 
 
 check_name = "Page 167: Ensure CUPS is not installed"
-check_description = "-"
+check_description = "CUPS is a dependency for Samba"
 
 command = "sudo rpm -q cups || true"
 run_command = subprocess.check_output(command, shell=True)
