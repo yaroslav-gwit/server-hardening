@@ -987,8 +987,8 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "rpcbind is not installed (or rpcbind service is disabled)"
-check_description = "-"
+check_name = "Page 195: Ensure rpcbind is not installed or the rpcbind services are masked"
+check_description = "This check is expected to fail because of samba dependency"
 
 command = "sudo rpm -q rpcbind || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -1005,7 +1005,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "rsync is not installed (or rsyncd service is disabled)"
+check_name = "Page 198: Ensure rsync is not installed or the rsyncd service is masked"
 check_description = "-"
 
 command = "sudo rpm -q rsync || true"
@@ -1023,7 +1023,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "NIS client is not installed"
+check_name = "Page 201: Ensure NIS Client is not installed"
 check_description = "-"
 
 command = "sudo rpm -q ypbind || true"
@@ -1037,7 +1037,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "rsh client is not installed"
+check_name = "Page 203: Ensure rsh client is not installed"
 check_description = "-"
 
 command = "sudo rpm -q rsh || true"
@@ -1051,7 +1051,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "talk is not installed"
+check_name = "Page 205: Ensure talk client is not installed"
 check_description = "-"
 
 command = "sudo rpm -q talk || true"
@@ -1065,7 +1065,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "telnet is not installed"
+check_name = "Page 207: Ensure telnet client is not installed"
 check_description = "-"
 
 command = "sudo rpm -q telnet || true"
@@ -1079,7 +1079,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "LDAP Client is not installed"
+check_name = "Page 209: Ensure LDAP client is not installed"
 check_description = "-"
 
 command = "sudo rpm -q openldap-clients || true"
@@ -1093,7 +1093,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Disable IPv6"
+check_name = "Page 215: Disable IPv6"
 check_description = "-"
 
 command = "sudo ip a | grep inet6 | wc -l || true"
@@ -2773,6 +2773,7 @@ print(" - Configure and check automatic updates. Page 148.")
 print(" - Check if xorg server components are needed. Page 163.")
 print(" - Check if cups is needed. Page 167.")
 print(" - Check if rpcbind is needed. Page 196.")
+print(" - Follow up on: Ensure nonessential services are removed or masked. Page 211.")
 print(" - Follow up on the: 5.3.4 Ensure SSH access is limited (Automated). Page 455.")
 print(" - Follow up on the: 5.6 Ensure root login is restricted to system console. Page 536.")
 print()
