@@ -2824,18 +2824,18 @@ else:
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score) + " out of " + str(len(task_list) + 1))
 
-print(((total_score / (len(task_list) + 1)) * 100))
-print(((total_score / len(task_list) + 1) * 100))
-# if ((total_score / len(task_list) + 1) * 100) > 95:
-if ((total_score / len(task_list) + 1) * 100) > 950:
+score_formula = (((total_score / (len(task_list) + 1)) * 100))
+print(score_formula)
+# if score_formula > 95:
+if score_formula > 950:
     status_string = "Green"
     status_foreground = Fore.GREEN
-# elif ((total_score / len(task_list) + 1) * 100) <= 85:
-elif ((total_score / (len(task_list) + 1)) * 100) >= 100:
+# elif score_formula <= 85:
+elif score_formula >= 100:
     status_string = "Yellow"
     status_foreground = Fore.YELLOW
-# elif ((total_score / len(task_list) + 1) * 100) < 85:
-elif ((total_score / len(task_list) + 1) * 100) >= 0:
+# elif score_formula < 85:
+elif score_formula >= 0:
     status_string = "Red"
     status_foreground = Fore.RED
 
