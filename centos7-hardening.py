@@ -2823,6 +2823,14 @@ else:
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
 print(bloded_string_TotalScore + ": " + str(total_score) + " out of " + str(len(task_list) + 1))
+
+bolded_string_SystemStatus = "\033[1m" + "Green" + "\033[0m"
+Failed = Fore.RED + 'Failed' + "\033[0m"
+GreenStatus = Fore.GREEN + bolded_string_SystemStatus + "\033[0m"
+Fixed = Fore.YELLOW + 'Fixed' + "\033[0m"
+RequiresManualFix = Fore.MAGENTA + 'Requires manual fix' + "\033[0m"
+print("System status: " + GreenStatus)
+
 print()
 print("To do:")
 print(" - Ensure GPG keys are configured. Page 76")
