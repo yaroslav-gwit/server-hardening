@@ -2822,7 +2822,7 @@ else:
 
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
-print(bloded_string_TotalScore + ": " + str(total_score))
+print(bloded_string_TotalScore + ": " + str(total_score) + " out of " + str(len(task_list) + 1))
 print()
 print("To do:")
 print(" - Ensure GPG keys are configured. Page 76")
