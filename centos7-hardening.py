@@ -2830,11 +2830,11 @@ if ((total_score / len(task_list) + 1) * 100) > 950:
     status_string = "Green"
     status_foreground = Fore.GREEN
 # elif ((total_score / len(task_list) + 1) * 100) <= 85:
-elif ((total_score / len(task_list) + 1) * 100) < 100:
+elif ((total_score / len(task_list) + 1) * 100) >= 100:
     status_string = "Yellow"
     status_foreground = Fore.MAGENTA
 # elif ((total_score / len(task_list) + 1) * 100) < 85:
-elif ((total_score / len(task_list) + 1) * 100) < 96:
+elif ((total_score / len(task_list) + 1) * 100) >= 0:
     status_string = "Red"
     status_foreground = Fore.RED
 
