@@ -40,8 +40,7 @@ task_list = [
 bash_scripts_location = "/root/server-hardening/additional_bash_scripts/"
 
 # Checks and fixes
-
-check_name = "CramFS"
+check_name = "Page 21: Ensure mounting of cramfs filesystems is disabled"
 check_description = "-"
 command = "sudo modprobe -n -v cramfs | grep -E '(cramfs|install)'"
 run_command = subprocess.check_output(command, shell=True)
@@ -58,7 +57,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "UDF File Systems"
+check_name = "Page 25: Ensure mounting of udf filesystems is disabled"
 check_description = "-"
 command = "sudo modprobe -n -v udf | grep -E '(udf|install)'"
 run_command = subprocess.check_output(command, shell=True)
@@ -75,7 +74,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/TMP/ is configured as tmpfs"
+check_name = "Page 27: Ensure /tmp is configured"
 check_description = "-"
 command = "sudo findmnt -n /tmp"
 run_command = subprocess.check_output(command, shell=True)
@@ -92,7 +91,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/TMP/ noexec"
+check_name = "Page 31: Ensure noexec option set on /tmp partition"
 check_description = "-"
 command = "sudo findmnt -n /tmp | grep -c -Ev '\\bnoexec\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -105,7 +104,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/TMP/ nodev"
+check_name = "Page 33: Ensure nodev option set on /tmp partition"
 check_description = "-"
 command = "sudo findmnt -n /tmp | grep -c -Ev '\\bnodev\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -118,7 +117,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/TMP/ nosuid"
+check_name = "Page 35: Ensure nosuid option set on /tmp partition"
 check_description = "-"
 command = "sudo findmnt -n /tmp | grep -c -Ev '\\bnosuid\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -131,7 +130,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/DEV/SHM/ is configured"
+check_name = "Page 37: Ensure /dev/shm is configured "
 check_description = "-"
 command = "sudo findmnt -n /dev/shm"
 run_command = subprocess.check_output(command, shell=True)
@@ -148,7 +147,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/DEV/SHM/ noexec"
+check_name = "Page 39: Ensure noexec option set on /dev/shm partition"
 check_description = "-"
 command = "sudo findmnt -n /dev/shm | grep -c -Ev '\\bnoexec\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -161,7 +160,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/DEV/SHM/ nodev"
+check_name = "Page 41: Ensure nodev option set on /dev/shm partition "
 check_description = "-"
 command = "sudo findmnt -n /dev/shm | grep -c -Ev '\\bnodev\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -174,7 +173,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/DEV/SHM/ nosuid"
+check_name = "Page 43: Ensure nosuid option set on /dev/shm partition"
 check_description = "-"
 command = "sudo findmnt -n /dev/shm | grep -c -Ev '\\bnosuid\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -188,7 +187,7 @@ else:
 
 
 ### LVL2 Check ###
-check_name = "/VAR/ partition check"
+check_name = "Page 45: Ensure separate partition exists for /var"
 check_description = "-"
 command = "sudo findmnt /var | grep -c '/var' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -202,7 +201,7 @@ else:
 
 
 ### LVL2 Check ###
-check_name = "/VAR/TMP/ partition check"
+check_name = "Page 47: Ensure separate partition exists for /var/tmp"
 check_description = "-"
 command = "sudo findmnt /var/tmp | wc -l"
 run_command = subprocess.check_output(command, shell=True)
@@ -215,7 +214,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/VAR/TMP/ noexec"
+check_name = "Page 49: Ensure /var/tmp partition includes the noexec option"
 check_description = "-"
 command = "sudo findmnt -n /var/tmp | grep -c -Ev '\\bnoexec\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -228,7 +227,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/VAR/TMP/ nodev"
+check_name = "Page 51: Ensure /var/tmp partition includes the nodev option"
 check_description = "-"
 command = "sudo findmnt -n /var/tmp | grep -c -Ev '\\bnodev\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -241,7 +240,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/VAR/TMP/ nosuid"
+check_name = "Page 53: Ensure /var/tmp partition includes the nosuid option"
 check_description = "-"
 command = "sudo findmnt -n /var/tmp | grep -c -Ev '\\bnosuid\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -255,7 +254,7 @@ else:
 
 
 ### LVL2 Check ###
-check_name = "/VAR/LOG/ partition check"
+check_name = "Page 55: Ensure separate partition exists for /var/log"
 check_description = "-"
 command = "sudo findmnt /var/log | wc -l"
 run_command = subprocess.check_output(command, shell=True)
@@ -269,7 +268,7 @@ else:
 
 
 ### LVL2 Check ###
-check_name = "/VAR/LOG/AUDIT/ partition check"
+check_name = "Page 57: Ensure separate partition exists for /var/log/audit"
 check_description = "-"
 command = "sudo findmnt /var/log/audit | wc -l"
 run_command = subprocess.check_output(command, shell=True)
@@ -283,7 +282,7 @@ else:
 
 
 ### LVL2 Check ###
-check_name = "/HOME/ partition check"
+check_name = "Page 59: Ensure separate partition exists for /home"
 check_description = "-"
 command = "sudo findmnt /home | wc -l"
 run_command = subprocess.check_output(command, shell=True)
@@ -296,7 +295,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "/HOME/ nodev"
+check_name = "Page 61: Ensure /home partition includes the nodev option"
 check_description = "-"
 command = "sudo findmnt -n /home | grep -c -Ev '\\bnodev\\b' || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -309,7 +308,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Removable media noexec"
+check_name = "Page 63: Ensure removable media partitions include noexec option"
 check_description = "-"
 command = "sudo " + bash_scripts_location + "check_removable_drives_noexec.sh | wc -l"
 run_command = subprocess.check_output(command, shell=True)
@@ -322,7 +321,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Removable media nodev"
+check_name = "Page 65: Ensure nodev option set on removable media partitions"
 check_description = "-"
 command = "sudo " + bash_scripts_location + "check_removable_drives_nodev.sh | wc -l"
 run_command = subprocess.check_output(command, shell=True)
@@ -335,7 +334,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Removable media nosuid"
+check_name = "Page 67: Ensure nosuid option set on removable media partitions"
 check_description = "-"
 command = "sudo " + bash_scripts_location + "check_removable_drives_suid.sh | wc -l"
 run_command = subprocess.check_output(command, shell=True)
@@ -348,7 +347,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Sticky bit check"
+check_name = "Page 69: Ensure sticky bit is set on all world-writable directories"
 check_description = "-"
 command = "sudo df --local -P 2>/dev/null | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -type d \\( -perm -0002 -a ! -perm -1000 \\) 2>/dev/null | wc -l"
 run_command = subprocess.check_output(command, shell=True)
@@ -361,7 +360,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Disable automounting"
+check_name = "Page 71: Disable Automounting"
 check_description = "-"
 command = "sudo systemctl show \"autofs.service\" | grep -i unitfilestate=enabled | wc -l"
 run_command = subprocess.check_output(command, shell=True)
@@ -374,7 +373,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Disable USB Storage"
+check_name = "Page 73: Disable USB Storage"
 check_description = "-"
 command = "sudo modprobe -n -v usb-storage"
 run_command = subprocess.check_output(command, shell=True)
@@ -391,7 +390,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "GPG Check is globally activated"
+check_name = "Page 80: Ensure gpgcheck is globally activated"
 check_description = "-"
 command = "sudo grep \"^\\s*gpgcheck\" /etc/yum.conf"
 run_command = subprocess.check_output(command, shell=True)
@@ -408,7 +407,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "AIDE is installed"
+check_name = "Page 83: Ensure AIDE is installed"
 check_description = "-"
 command = "sudo rpm -q aide || true"
 run_command = subprocess.check_output(command, shell=True)
@@ -421,8 +420,8 @@ else:
     total_score = total_score + lvl1_plus
 
 
-check_name = "AIDE is scheduled to run periodically"
-check_description = "-"
+check_name = "Page 85: Ensure filesystem integrity is regularly checked"
+check_description = "Logs are kept in /root/aide_log_<date>.log"
 command = "sudo grep -c aide /etc/crontab || true"
 run_command = subprocess.check_output(command, shell=True)
 aide_is_scheduled = run_command.decode("utf-8")
@@ -434,7 +433,7 @@ else:
     total_score = total_score + lvl1_plus
 
 
-check_name = "GRUB2 is password protected"
+check_name = "Page 89: Ensure bootloader password is set"
 check_description = "-"
 command = "sudo " + bash_scripts_location + "check_bootloader_password.sh"
 run_command = subprocess.check_output(command, shell=True)
@@ -447,7 +446,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "GRUB2 config only accessible by root"
+check_name = "Page 93: Ensure permissions on bootloader config are configured"
 check_description = "-"
 command = "sudo stat -c \"%a\" \"/boot/efi/EFI/centos/user.cfg\""
 run_command = subprocess.check_output(command, shell=True)
@@ -464,7 +463,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Authentication for single user mode"
+check_name = "Page 96: Ensure authentication required for single user mode"
 check_description = "-"
 command = "sudo grep /sbin/sulogin /usr/lib/systemd/system/rescue.service"
 run_command = subprocess.check_output(command, shell=True)
@@ -481,7 +480,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Resticted core dumps"
+check_name = "Page 99: Ensure core dumps are restricted"
 check_description = "-"
 
 command = "sudo grep -E \"^\\s*\\*\\s+hard\\s+core\" /etc/security/limits.conf"
@@ -511,7 +510,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "XD/NX support is enabled"
+check_name = "Page 101: Ensure XD/NX support is enabled"
 check_description = "-"
 command = "sudo journalctl | grep 'protection: active'"
 run_command = subprocess.check_output(command, shell=True)
@@ -524,7 +523,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Address space layout randomization (ASLR) is enabled"
+check_name = "Page 103: Ensure address space layout randomization (ASLR) is enabled"
 check_description = "-"
 aslr_is_enabled_regex = "kernel.randomize_va_space = 2"
 
@@ -543,7 +542,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "prelink is not installed"
+check_name = "Page 105: Ensure prelink is not installed"
 check_description = "-"
 
 command = "sudo rpm -q prelink || true"
@@ -557,7 +556,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "SELinux is installed"
+check_name = "Page 109: Ensure SELinux is installed"
 check_description = "-"
 
 command = "sudo rpm -q libselinux || true"
@@ -571,7 +570,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "SELinux is not disabled during boot"
+check_name = "Page 111: Ensure SELinux is not disabled in bootloader configuration"
 check_description = "-"
 
 command = "sudo grep -Eq \"(selinux=0|enforcing=0)\" /boot/efi/EFI/centos/grub.cfg | wc -l || true"
@@ -585,7 +584,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "SELinux policy is configured"
+check_name = "Page 113: Ensure SELinux policy is configured"
 check_description = "-"
 
 command = "sudo grep -G \"^SELINUXTYPE=\" /etc/selinux/config || true"
@@ -599,8 +598,8 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "SELinux mode is enforcing or permissive"
-check_description = "We are running SELinux in permissive mode only."
+check_name = "Page 115: Ensure the SELinux mode is enforcing or permissive"
+check_description = "We are running SELinux mostly in permissive mode"
 
 command = "sudo getenforce"
 run_command = subprocess.check_output(command, shell=True)
@@ -617,7 +616,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "No unconfined services exist"
+check_name = "Page 120: Ensure no unconfined services exist"
 check_description = "-"
 
 command = "sudo ps -eZ | grep unconfined_service_t | wc -l"
@@ -631,7 +630,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "SETroubleshoot is not installed"
+check_name = "Page 122: Ensure SETroubleshoot is not installed"
 check_description = "-"
 
 command = "sudo rpm -q setroubleshoot || true"
@@ -645,7 +644,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "mcstrans is not installed"
+check_name = "Page 124: Ensure the MCS Translation Service (mcstrans) is not installed"
 check_description = "-"
 
 command = "sudo rpm -q mcstrans || true"
@@ -659,7 +658,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Message of the day is configured"
+check_name = "Page 127: Ensure message of the day is configured properly"
 check_description = "-"
 command = "sudo grep \"UNAUTHORISED ACCESS TO THIS DEVICE IS PROHIBITED\" /etc/motd | wc -l"
 run_command = subprocess.check_output(command, shell=True)
@@ -672,7 +671,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Local login warning banner is configured"
+check_name = "Page 129: Ensure local login warning banner is configured properly"
 check_description = "-"
 command = "sudo cat /etc/issue"
 run_command = subprocess.check_output(command, shell=True)
@@ -685,7 +684,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "Remote login warning banner is configured"
+check_name = "Page 131: Ensure remote login warning banner is configured properly"
 check_description = "-"
 command = "sudo cat /etc/issue.net"
 run_command = subprocess.check_output(command, shell=True)
@@ -698,7 +697,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "644 permissions on /etc/motd"
+check_name = "Page 133: Ensure permissions on /etc/motd are configured"
 check_description = "-"
 command = "sudo stat -c \"%a\" \"/etc/motd\""
 run_command = subprocess.check_output(command, shell=True)
@@ -711,7 +710,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "644 permissions on /etc/issue"
+check_name = "Page 135: Ensure permissions on /etc/issue are configured"
 check_description = "-"
 command = "sudo stat -c \"%a\" \"/etc/issue\""
 run_command = subprocess.check_output(command, shell=True)
@@ -724,7 +723,7 @@ else:
     task_list.append([check_name, Failed, check_description])
 
 
-check_name = "644 permissions on /etc/issue.net"
+check_name = "Page 137: Ensure permissions on /etc/issue.net are configured"
 check_description = "-"
 command = "sudo stat -c \"%a\" \"/etc/issue.net\""
 run_command = subprocess.check_output(command, shell=True)
@@ -746,7 +745,7 @@ gdm_is_not_installed = run_command.decode("utf-8")
 
 if re.match("package gdm is not installed", gdm_is_not_installed):
     task_list.append([check_name, Passed, check_description])
-    total_score = total_score + lvl1_plus
+    total_score = total_score + lvl2_plus
 else:
     task_list.append([check_name, Failed, check_description])#
 
@@ -2825,6 +2824,8 @@ print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(
 print(bloded_string_TotalScore + ": " + str(total_score))
 print()
 print("To do:")
+print(" - Ensure GPG keys are configured. Page 76")
+print(" - Ensure package manager repositories are configured. Page 78")
 print(" - Configure and check automatic updates. Page 148.")
 print(" - Check if xorg server components are needed. Page 163.")
 print(" - Follow up on: Ensure nonessential services are removed or masked. Page 211.")
