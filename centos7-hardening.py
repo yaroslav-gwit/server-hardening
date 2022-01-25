@@ -2838,7 +2838,7 @@ elif score_formula > 0:
 
 bolded_string_SystemStatus = "\033[1m" + status_string + "\033[0m"
 SystemStatus = status_foreground + bolded_string_SystemStatus + "\033[0m"
-print("System status: " + SystemStatus)
+print("\033[1mSystem status:\033[0m " + SystemStatus)
 
 
 print()
