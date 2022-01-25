@@ -1,3 +1,4 @@
 # Requirements list
 colorama
 tabulate
+typer
