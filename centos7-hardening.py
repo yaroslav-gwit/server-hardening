@@ -2840,8 +2840,8 @@ bolded_string_SystemStatus = "\033[1m" + status_string + "\033[0m"
 SystemStatus = status_foreground + bolded_string_SystemStatus + "\033[0m"
 print("\033[1mSystem status:\033[0m " + SystemStatus)
 
+print()
 
-# print()
 # print("To do:")
 # print(" - Ensure GPG keys are configured. Page 76")
 # print(" - Ensure package manager repositories are configured. Page 78")
