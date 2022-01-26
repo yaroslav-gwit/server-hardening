@@ -661,7 +661,7 @@ else:
 
 check_name = "Page 127: Ensure message of the day is configured properly"
 check_description = "-"
-command = "sudo grep \"UNAUTHORISED ACCESS TO THIS DEVICE IS PROHIBITED\" /etc/motd | wc -l"
+command = "sudo grep \"UNAUTHORISED ACCESS TO THIS APPLIANCE IS PROHIBITED\" /etc/motd | wc -l"
 run_command = subprocess.check_output(command, shell=True)
 motd_is_configued = run_command.decode("utf-8")
 
@@ -674,7 +674,7 @@ else:
 
 check_name = "Page 129: Ensure local login warning banner is configured properly"
 check_description = "-"
-command = "sudo grep \"UNAUTHORISED ACCESS TO THIS DEVICE IS PROHIBITED\" /etc/issue | wc -l"
+command = "sudo grep \"UNAUTHORISED ACCESS TO THIS APPLIANCE IS PROHIBITED\" /etc/issue | wc -l"
 run_command = subprocess.check_output(command, shell=True)
 etc_issue_is_configured = run_command.decode("utf-8")
 
@@ -687,7 +687,7 @@ else:
 
 check_name = "Page 131: Ensure remote login warning banner is configured properly"
 check_description = "-"
-command = "sudo grep \"UNAUTHORISED ACCESS TO THIS DEVICE IS PROHIBITED\" /etc/issue.net | wc -l"
+command = "sudo grep \"UNAUTHORISED ACCESS TO THIS APPLIANCE IS PROHIBITED\" /etc/issue.net | wc -l"
 run_command = subprocess.check_output(command, shell=True)
 etc_issue_net_is_configured = run_command.decode("utf-8")
 
