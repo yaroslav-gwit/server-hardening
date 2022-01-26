@@ -2841,16 +2841,16 @@ SystemStatus = status_foreground + bolded_string_SystemStatus + "\033[0m"
 print("\033[1mSystem status:\033[0m " + SystemStatus)
 
 
-print()
-print("To do:")
-print(" - Ensure GPG keys are configured. Page 76")
-print(" - Ensure package manager repositories are configured. Page 78")
-print(" - Configure and check automatic updates. Page 148.")
-print(" - Check if xorg server components are needed. Page 163.")
-print(" - Follow up on: Ensure nonessential services are removed or masked. Page 211.")
-print(" - Follow up on the: 5.3.4 Ensure SSH access is limited (Automated). Page 455.")
-print(" - Follow up on the: 5.6 Ensure root login is restricted to system console. Page 536.")
-print()
+# print()
+# print("To do:")
+# print(" - Ensure GPG keys are configured. Page 76")
+# print(" - Ensure package manager repositories are configured. Page 78")
+# print(" - Configure and check automatic updates. Page 148.")
+# print(" - Check if xorg server components are needed. Page 163.")
+# print(" - Follow up on: Ensure nonessential services are removed or masked. Page 211.")
+# print(" - Follow up on the: 5.3.4 Ensure SSH access is limited (Automated). Page 455.")
+# print(" - Follow up on the: 5.6 Ensure root login is restricted to system console. Page 536.")
+# print()
 
 
 # Future:
