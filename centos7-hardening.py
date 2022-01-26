@@ -674,11 +674,11 @@ else:
 
 check_name = "Page 129: Ensure local login warning banner is configured properly"
 check_description = "-"
-command = "sudo cat /etc/issue"
+command = "sudo grep \"UNAUTHORISED ACCESS TO THIS DEVICE IS PROHIBITED\" /etc/issue | wc -l"
 run_command = subprocess.check_output(command, shell=True)
 etc_issue_is_configured = run_command.decode("utf-8")
 
-if re.match("Authorized users only. All activity may be monitored and reported.", etc_issue_is_configured):
+if re.match("1", etc_issue_is_configured):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
@@ -687,11 +687,11 @@ else:
 
 check_name = "Page 131: Ensure remote login warning banner is configured properly"
 check_description = "-"
-command = "sudo cat /etc/issue.net"
+command = "sudo grep \"UNAUTHORISED ACCESS TO THIS DEVICE IS PROHIBITED\" /etc/issue.net | wc -l"
 run_command = subprocess.check_output(command, shell=True)
 etc_issue_net_is_configured = run_command.decode("utf-8")
 
-if re.match("Authorized users only. All activity may be monitored and reported.", etc_issue_net_is_configured):
+if re.match("1", etc_issue_net_is_configured):
     task_list.append([check_name, Passed, check_description])
     total_score = total_score + lvl1_plus
 else:
