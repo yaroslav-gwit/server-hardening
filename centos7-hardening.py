@@ -1753,7 +1753,7 @@ check_description = "-"
 cron_deny_exist = exists("/etc/cron.deny")
 cron_allow_exist = exists("/etc/cron.allow")
 
-command = "sudo stat /etc/cron.allow | grep Access | head -1 2>/dev/null || true"
+command = "sudo stat /etc/cron.allow | grep \"Access: (\" 2>/dev/null || true"
 run_command = subprocess.check_output(command, shell=True)
 cron_allow_permissions = run_command.decode("utf-8")
 
