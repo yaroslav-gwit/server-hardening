@@ -2822,9 +2822,9 @@ else:
 
 # Table printout #
 print(tabulate(task_list, table_headers, tablefmt="fancy_grid", showindex=range(1, len(task_list) + 1) ) )
-print(bloded_string_TotalScore + ": " + str(total_score) + " out of " + str(len(task_list) + 1))
+print(bloded_string_TotalScore + ": " + str(total_score) + " out of " + str(len(task_list)))
 
-score_formula = (((total_score / (len(task_list) + 1)) * 100))
+score_formula = (((total_score / (len(task_list))) * 100))
 print("\033[1mScore percentage:\033[0m " + str(round(score_formula, 2)) + "%")
 if score_formula > 95:
     status_string = "Green"
